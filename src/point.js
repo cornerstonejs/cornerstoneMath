@@ -66,5 +66,5 @@ var cornerstoneMath = (function (cornerstoneMath) {
     };
 
 
-    return cornerstoneTools;
+    return cornerstoneMath;
 }(cornerstoneMath));

@@ -581,7 +581,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
             return function ( vector ) {
 
-                if ( v1 === undefined ) v1 = new cornerstoneTools.Vector3();
+                if ( v1 === undefined ) v1 = new cornerstoneMath.Vector3();
 
                 v1.copy( vector ).normalize();
 
@@ -599,7 +599,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
             return function ( planeNormal ) {
 
-                if ( v1 === undefined ) v1 = new cornerstoneTools.Vector3();
+                if ( v1 === undefined ) v1 = new cornerstoneMath.Vector3();
 
                 v1.copy( this ).projectOnVector( planeNormal );
 
