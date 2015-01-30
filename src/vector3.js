@@ -632,7 +632,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
             // clamp, to handle numerical problems
 
-            return Math.acos( cornerstoneMath.Math.clamp( theta, -1, 1 ) );
+            return Math.acos( cornerstoneMath.clamp( theta, -1, 1 ) );
 
         },
 

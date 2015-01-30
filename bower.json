@@ -1,6 +1,6 @@
 {
     "name": "cornerstoneMath",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Math and computation geometry functionality for cornerstone",
     "main" : "dist/cornerstoneMath.js",
     "ignore": [

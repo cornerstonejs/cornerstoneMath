@@ -1,4 +1,4 @@
-/*! cornerstoneMath - v0.1.0 - 2014-05-06 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
+/*! cornerstoneMath - v0.1.1 - 2015-01-30 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
 // Begin Source: src/lineSegment.js
 var cornerstoneMath = (function (cornerstoneMath) {
 
@@ -55,6 +55,39 @@ var cornerstoneMath = (function (cornerstoneMath) {
     return cornerstoneMath;
 }(cornerstoneMath)); 
 // End Source; src/lineSegment.js
+
+// Begin Source: src/math.js
+// Based on THREE.JS
+
+var cornerstoneMath = (function (cornerstoneMath) {
+
+    "use strict";
+
+    if (cornerstoneMath === undefined) {
+        cornerstoneMath = {};
+    }
+
+    function clamp(x,a,b) {
+        return ( x < a ) ? a : ( ( x > b ) ? b : x );
+    }
+
+    function degToRad(degrees) {
+        var degreeToRadiansFactor = Math.PI / 180;
+        return degrees * degreeToRadiansFactor;
+    }
+
+    function radToDeg(radians) {
+        var radianToDegreesFactor = 180 / Math.PI;
+        return radians * radianToDegreesFactor;
+    }
+
+    cornerstoneMath.clamp = clamp;
+    cornerstoneMath.degToRad = degToRad;
+    cornerstoneMath.radToDeg = radToDeg;
+
+    return cornerstoneMath;
+}(cornerstoneMath)); 
+// End Source; src/math.js
 
 // Begin Source: src/matrix4.js
 // Based on THREE.JS
@@ -1211,7 +1244,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
             // clamp, to handle numerical problems
 
-            return Math.acos( cornerstoneMath.Math.clamp( theta, -1, 1 ) );
+            return Math.acos( cornerstoneMath.clamp( theta, -1, 1 ) );
 
         },
 
