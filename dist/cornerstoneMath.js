@@ -1,4 +1,4 @@
-/*! cornerstoneMath - v0.1.1 - 2015-08-20 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
+/*! cornerstoneMath - v0.1.1 - 2015-08-22 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
 // Begin Source: src/vector3.js
 // Based on THREE.JS
 
@@ -894,8 +894,38 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
             return new cornerstoneMath.Line3().copy( this );
 
-        }
+        },
 
+        intersectLine: function ( line ) {
+            // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
+            var da = this.end.clone().sub(this.start);
+            var db = line.end.clone().sub(line.start);
+            var dc = line.start.clone().sub(this.start);
+
+            var daCrossDb = da.clone().cross(db);
+            var dcCrossDb = dc.clone().cross(db);
+
+            console.log(dc.dot(da));
+            if (dc.dot(da) === 0){
+                // Lines are not coplanar, stop here
+                // console.log('not coplanar');
+                return;
+            }
+
+            var s = dcCrossDb.dot(daCrossDb) / daCrossDb.lengthSq();
+
+            // Make sure we have an intersection
+            if (s > 1.0 || isNaN(s)) {
+                return;
+            }
+
+            var intersection = this.start.clone().add(da.clone().multiplyScalar(s));
+            var distanceTest = intersection.clone().sub(line.start).lengthSq() + intersection.clone().sub(line.end).lengthSq();
+            if (distanceTest <= line.distanceSq()) {
+                return intersection;
+            }
+            return;
+        }
     };
 
     return cornerstoneMath;
