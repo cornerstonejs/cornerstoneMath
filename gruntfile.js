@@ -22,6 +22,7 @@ module.exports = function(grunt) {
         concat: {
             build: {
                 src : [
+                    'src/vector3.js',
                     'src/**/*.js'
                 ],
                 dest: 'build/built.js',
