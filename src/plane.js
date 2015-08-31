@@ -189,7 +189,6 @@ var cornerstoneMath = (function (cornerstoneMath) {
             // If the planes are parallel, return an empty vector for the
             // intersection line
             if (this.normal.clone().cross(targetPlane.normal).length < 1e-10) {
-                //console.log("Planes are parallel");
                 intersectionData.direction = new cornerstoneMath.Vector3();
                 return intersectionData;
             }

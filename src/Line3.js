@@ -142,10 +142,8 @@ var cornerstoneMath = (function (cornerstoneMath) {
             var daCrossDb = da.clone().cross(db);
             var dcCrossDb = dc.clone().cross(db);
 
-            console.log(dc.dot(da));
             if (dc.dot(da) === 0){
                 // Lines are not coplanar, stop here
-                // console.log('not coplanar');
                 return;
             }
 

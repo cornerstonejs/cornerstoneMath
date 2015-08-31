@@ -1,4 +1,4 @@
-/*! cornerstoneMath - v0.1.1 - 2015-08-22 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
+/*! cornerstoneMath - v0.1.1 - 2015-08-31 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
 // Begin Source: src/vector3.js
 // Based on THREE.JS
 
@@ -905,10 +905,8 @@ var cornerstoneMath = (function (cornerstoneMath) {
             var daCrossDb = da.clone().cross(db);
             var dcCrossDb = dc.clone().cross(db);
 
-            console.log(dc.dot(da));
             if (dc.dot(da) === 0){
                 // Lines are not coplanar, stop here
-                // console.log('not coplanar');
                 return;
             }
 
@@ -1469,7 +1467,6 @@ var cornerstoneMath = (function (cornerstoneMath) {
             // If the planes are parallel, return an empty vector for the
             // intersection line
             if (this.normal.clone().cross(targetPlane.normal).length < 1e-10) {
-                //console.log("Planes are parallel");
                 intersectionData.direction = new cornerstoneMath.Vector3();
                 return intersectionData;
             }
