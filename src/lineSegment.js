@@ -53,7 +53,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
         var a1, a2, b1, b2, c1, c2; // Coefficients of line equations
         var r1, r2, r3, r4; // Sign values
 
-        var denom, offset, num; //Intermediate values
+        var denom, num; //Intermediate values
 
         // Compute a1, b1, c1, where line joining points 1 and 2 is "a1 x  +  b1 y  +  c1  =  0"
         a1 = y2 - y1;
@@ -71,10 +71,7 @@ var cornerstoneMath = (function (cornerstoneMath) {
         if (r3 !== 0 &&
             r4 !== 0 &&
             cornerstoneMath.sign(r3) === cornerstoneMath.sign(r4)) {
-            intersectionPoint.x = 0;
-            intersectionPoint.y = 0;
-            intersectionPoint.intersected = false;
-            return intersectionPoint;
+            return;
         }
 
         /* Compute a2, b2, c2 */
@@ -96,18 +93,13 @@ var cornerstoneMath = (function (cornerstoneMath) {
         if (r1 !== 0 &&
             r2 !== 0 &&
             cornerstoneMath.sign(r1) === cornerstoneMath.sign(r2)) {
-            intersectionPoint.x = 0;
-            intersectionPoint.y = 0;
-            intersectionPoint.intersected = false;
-            return intersectionPoint;
+            return;
         }
 
         /* Line segments intersect: compute intersection point.
          */
 
         denom = (a1 * b2) - (a2 * b1);
-
-        offset = denom < 0 ? -denom / 2 : denom / 2;
 
         /* The denom/2 is to get rounding instead of truncating.  It
          * is added or subtracted to the numerator, depending upon the
@@ -122,7 +114,6 @@ var cornerstoneMath = (function (cornerstoneMath) {
 
         intersectionPoint.x = x;
         intersectionPoint.y = y;
-        intersectionPoint.intersected = true;
 
         return intersectionPoint;
     }
