@@ -1,4 +1,4 @@
-/*! cornerstoneMath - v0.1.2 - 2016-02-04 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
+/*! cornerstoneMath - v0.1.3 - 2016-02-04 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneMath */
 // Begin Source: src/vector3.js
 // Based on THREE.JS
 
