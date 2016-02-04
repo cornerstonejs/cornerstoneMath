@@ -53,6 +53,31 @@ var cornerstoneMath = (function (cornerstoneMath) {
         return true;
     }
 
+    /**
+     * Returns the closest source point to a target point
+     * given an array of source points.
+     *
+     * @param sources An Array of source Points
+     * @param target The target Point
+     * @returns Point The closest point from the points array
+     */
+    function findClosestPoint(sources, target) {
+        var distances = [];
+        var minDistance;
+        sources.forEach(function(source, index) {
+            var distance = cornerstoneMath.point.distance(source, target);
+            distances.push(distance);
+            
+            if (index === 0) {
+                minDistance = distance;
+            } else {
+                minDistance = Math.min(distance, minDistance);
+            }
+        });
+
+        var index = distances.indexOf(minDistance);
+        return sources[index];
+    }
 
     // module exports
     cornerstoneMath.point =
@@ -62,7 +87,8 @@ var cornerstoneMath = (function (cornerstoneMath) {
         pageToPoint: pageToPoint,
         distance: distance,
         distanceSquared: distanceSquared,
-        insideRect: insideRect
+        insideRect: insideRect,
+        findClosestPoint: findClosestPoint
     };
 
 
