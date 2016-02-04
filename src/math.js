@@ -22,9 +22,15 @@ var cornerstoneMath = (function (cornerstoneMath) {
         return radians * radianToDegreesFactor;
     }
 
+    // Returns sign of number
+    function sign(x) {
+        return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
+    }
+
     cornerstoneMath.clamp = clamp;
     cornerstoneMath.degToRad = degToRad;
     cornerstoneMath.radToDeg = radToDeg;
+    cornerstoneMath.sign = sign;
 
     return cornerstoneMath;
 }(cornerstoneMath));
