@@ -1,36 +1,30 @@
 // Based on THREE.JS
+function clamp (x, a, b) {
+  return (x < a) ? a : ((x > b) ? b : x);
+}
 
-var cornerstoneMath = (function (cornerstoneMath) {
+function degToRad (degrees) {
+  const degreeToRadiansFactor = Math.PI / 180;
 
-    "use strict";
 
-    if (cornerstoneMath === undefined) {
-        cornerstoneMath = {};
-    }
+  return degrees * degreeToRadiansFactor;
+}
 
-    function clamp(x,a,b) {
-        return ( x < a ) ? a : ( ( x > b ) ? b : x );
-    }
+function radToDeg (radians) {
+  const radianToDegreesFactor = 180 / Math.PI;
 
-    function degToRad(degrees) {
-        var degreeToRadiansFactor = Math.PI / 180;
-        return degrees * degreeToRadiansFactor;
-    }
 
-    function radToDeg(radians) {
-        var radianToDegreesFactor = 180 / Math.PI;
-        return radians * radianToDegreesFactor;
-    }
+  return radians * radianToDegreesFactor;
+}
 
-    // Returns sign of number
-    function sign(x) {
-        return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
-    }
+// Returns sign of number
+function sign (x) {
+  return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
+}
 
-    cornerstoneMath.clamp = clamp;
-    cornerstoneMath.degToRad = degToRad;
-    cornerstoneMath.radToDeg = radToDeg;
-    cornerstoneMath.sign = sign;
-
-    return cornerstoneMath;
-}(cornerstoneMath));
+export {
+  clamp,
+  degToRad,
+  radToDeg,
+  sign
+};
