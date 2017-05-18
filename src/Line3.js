@@ -1,3 +1,6 @@
+import Vector3 from './vector3';
+import { clamp } from './math';
+
 // Copied from THREE.JS
 /**
  * @author bhouston / http://exocortex.com
@@ -7,8 +10,8 @@
 class Line3 {
   constructor (start, end) {
 
-    this.start = (start !== undefined) ? start : new cornerstoneMath.Vector3();
-    this.end = (end !== undefined) ? end : new cornerstoneMath.Vector3();
+    this.start = (start !== undefined) ? start : new Vector3();
+    this.end = (end !== undefined) ? end : new Vector3();
 
   }
 
@@ -32,7 +35,7 @@ class Line3 {
 
   center (optionalTarget) {
 
-    const result = optionalTarget || new cornerstoneMath.Vector3();
+    const result = optionalTarget || new Vector3();
 
 
     return result.addVectors(this.start, this.end).multiplyScalar(0.5);
@@ -41,7 +44,7 @@ class Line3 {
 
   delta (optionalTarget) {
 
-    const result = optionalTarget || new cornerstoneMath.Vector3();
+    const result = optionalTarget || new Vector3();
 
 
     return result.subVectors(this.end, this.start);
@@ -62,7 +65,7 @@ class Line3 {
 
   at (t, optionalTarget) {
 
-    const result = optionalTarget || new cornerstoneMath.Vector3();
+    const result = optionalTarget || new Vector3();
 
     return this.delta(result).multiplyScalar(t).add(this.start);
 
@@ -70,8 +73,8 @@ class Line3 {
 
   closestPointToPointParameter () {
 
-    const startP = new cornerstoneMath.Vector3();
-    const startEnd = new cornerstoneMath.Vector3();
+    const startP = new Vector3();
+    const startEnd = new Vector3();
 
     return function (point, clampToLine) {
 
@@ -85,7 +88,7 @@ class Line3 {
 
       if (clampToLine) {
 
-        t = cornerstoneMath.Math.clamp(t, 0, 1);
+        t = clamp(t, 0, 1);
 
       }
 
@@ -99,7 +102,7 @@ class Line3 {
 
     const t = this.closestPointToPointParameter(point, clampToLine);
 
-    const result = optionalTarget || new cornerstoneMath.Vector3();
+    const result = optionalTarget || new Vector3();
 
     return this.delta(result).multiplyScalar(t).add(this.start);
 
@@ -122,7 +125,7 @@ class Line3 {
 
   clone () {
 
-    return new cornerstoneMath.Line3().copy(this);
+    return new Line3().copy(this);
 
   }
 

@@ -1,3 +1,5 @@
+import { sign } from './math';
+
  // Based on  http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr (x) {
   return x * x;
@@ -69,7 +71,7 @@ function intersectLine (lineSegment1, lineSegment2) {
 
   if (r3 !== 0 &&
         r4 !== 0 &&
-        cornerstoneMath.sign(r3) === cornerstoneMath.sign(r4)) {
+        sign(r3) === sign(r4)) {
     return;
   }
 
@@ -91,7 +93,7 @@ function intersectLine (lineSegment1, lineSegment2) {
 
   if (r1 !== 0 &&
         r2 !== 0 &&
-        cornerstoneMath.sign(r1) === cornerstoneMath.sign(r2)) {
+        sign(r1) === sign(r2)) {
     return;
   }
 

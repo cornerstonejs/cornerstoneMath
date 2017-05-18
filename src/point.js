@@ -1,3 +1,5 @@
+import pointLib from './point';
+
 function pageToPoint (e) {
   return {
     x: e.pageX,
@@ -54,7 +56,7 @@ function findClosestPoint (sources, target) {
   let minDistance;
 
   sources.forEach(function (source, index) {
-    const distance = cornerstoneMath.point.distance(source, target);
+    const distance = pointLib.distance(source, target);
 
     distances.push(distance);
 

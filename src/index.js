@@ -1,10 +1,7 @@
+export * from './math.js';
+
 export { default as Line3 } from './Line3.js';
 export { default as lineSegment } from './lineSegment.js';
-export { clamp,
-         degToRad,
-         radToDeg,
-         sign } from './math.js';
-
 export { default as Matrix4 } from './matrix4.js';
 export { default as plane } from './plane.js';
 export { default as point } from './point.js';
