@@ -1,6 +1,6 @@
 {
-    "name": "cornerstoneMath",
-    "version": "0.1.3",
+    "name": "cornerstone-math",
+    "version": "0.1.4",
     "description": "Math and computation geometry functionality for cornerstone",
     "keywords": [
         "DICOM",
@@ -34,6 +34,7 @@
       "webpack:prod": "ENV=prod webpack --progress --config ./config/webpack",
       "webpack:watch": "webpack --progress --debug --watch  --config ./config/webpack",
       "watch": "npm run webpack:watch",
+      "start": "npm run webpack",
       "test": "npm run test:phantom",
       "test:watch": "karma start config/karma/karma-watch.js",
       "test:phantom": "karma start config/karma/karma-phantom.js",

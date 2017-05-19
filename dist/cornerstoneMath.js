@@ -1,4 +1,4 @@
-/*! cornerstoneMath - 0.1.3 - 2017-41-01 | (c) 2017 Chris Hafey | https://github.com/chafey/cornerstoneTools */
+/*! cornerstone-math - 0.1.4 - 2017-05-19 | (c) 2017 Chris Hafey | https://github.com/chafey/cornerstoneTools */
 var cornerstoneMath =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
