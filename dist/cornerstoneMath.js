@@ -1,6 +1,15 @@
-/*! cornerstone-math - 0.1.4 - 2017-05-19 | (c) 2017 Chris Hafey | https://github.com/chafey/cornerstoneTools */
-var cornerstoneMath =
-/******/ (function(modules) { // webpackBootstrap
+/*! cornerstone-math - 0.1.5 - 2017-05-22 | (c) 2017 Chris Hafey | https://github.com/chafey/cornerstoneTools */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("cornerstoneMath", [], factory);
+	else if(typeof exports === 'object')
+		exports["cornerstoneMath"] = factory();
+	else
+		root["cornerstoneMath"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2053,4 +2062,5 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ })
 /******/ ]);
+});
 //# sourceMappingURL=cornerstoneMath.js.map
