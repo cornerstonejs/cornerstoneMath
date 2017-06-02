@@ -4,20 +4,20 @@
   "description": "Math and computation geometry functionality for cornerstone",
   "main": "./dist/cornerstoneMath.min.js",
   "keywords": [
-      "DICOM",
-      "medical",
-      "imaging",
-      "cornerstone",
-      "math",
-      "computation geometry"
+    "DICOM",
+    "medical",
+    "imaging",
+    "cornerstone",
+    "math",
+    "computation geometry"
   ],
   "author": "Chris Hafey",
   "homepage": "https://github.com/chafey/cornerstoneMath",
   "license": "MIT",
   "module": "src/index.js",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/chafey/cornerstoneMath.git"
+    "type": "git",
+    "url": "https://github.com/chafey/cornerstoneMath.git"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.js src",
@@ -32,8 +32,8 @@
     "version": "node -p -e \"'export default \\'' + require('./package.json').version + '\\';'\" > src/version.js",
     "build": "npm run test && npm run version && npm run webpack && npm run doc:generate",
     "webpack": "npm run clean:dist && npm run webpack:prod && npm run webpack:dev",
-    "webpack:dev": "ENV=dev webpack --progress --config ./config/webpack",
-    "webpack:prod": "ENV=prod webpack --progress --config ./config/webpack",
+    "webpack:dev": "webpack --progress --config ./config/webpack/webpack-dev",
+    "webpack:prod": "webpack --progress --config ./config/webpack/webpack-prod",
     "webpack:watch": "webpack --progress --debug --watch  --config ./config/webpack",
     "watch": "npm run webpack:watch",
     "start": "npm run webpack",
@@ -52,6 +52,7 @@
     "docdash": "^0.4.0",
     "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
+    "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^2.0.0",
     "jsdoc": "^3.4.3",
     "karma": "^1.6.0",
