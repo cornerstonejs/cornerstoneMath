@@ -1,3 +1,5 @@
+ import lineSegment from './lineSegment';
+
  function rectToLineSegments (rect) {
    const top = {
      start: {
@@ -53,8 +55,8 @@
    let minDistance = 655535;
    const lineSegments = rectToLineSegments(rect);
 
-   lineSegments.forEach(function (lineSegment) {
-     const distance = cornerstoneMath.lineSegment.distanceToPoint(lineSegment, point);
+   lineSegments.forEach(function (segment) {
+     const distance = lineSegment.distanceToPoint(segment, point);
 
      if(distance < minDistance) {
        minDistance = distance;

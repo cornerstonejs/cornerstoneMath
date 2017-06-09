@@ -54,14 +54,14 @@ function findClosestPoint (sources, target) {
   let minDistance;
 
   sources.forEach(function (source, index) {
-    const distance = cornerstoneMath.point.distance(source, target);
+    const d = distance(source, target);
 
-    distances.push(distance);
+    distances.push(d);
 
     if (index === 0) {
-      minDistance = distance;
+      minDistance = d;
     } else {
-      minDistance = Math.min(distance, minDistance);
+      minDistance = Math.min(d, minDistance);
     }
   });
 
