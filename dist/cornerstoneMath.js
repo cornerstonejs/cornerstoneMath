@@ -2033,7 +2033,7 @@ Object.defineProperty(exports, 'Matrix4', {
 
 var _plane = __webpack_require__(6);
 
-Object.defineProperty(exports, 'plane', {
+Object.defineProperty(exports, 'Plane', {
          enumerable: true,
          get: function get() {
                   return _interopRequireDefault(_plane).default;
