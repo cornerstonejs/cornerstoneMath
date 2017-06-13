@@ -1,5 +1,5 @@
-import Vector3 from './vector3';
-import { clamp } from './math';
+import Vector3 from './vector3.js';
+import { clamp } from './math.js';
 
 // Copied from THREE.JS
 /**

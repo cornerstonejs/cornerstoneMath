@@ -1,4 +1,4 @@
-import { sign } from './math';
+import { sign } from './math.js';
 
  // Based on  http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr (x) {
