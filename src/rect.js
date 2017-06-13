@@ -1,4 +1,4 @@
- import lineSegment from './lineSegment';
+ import lineSegment from './lineSegment.js';
 
  function rectToLineSegments (rect) {
    const top = {
