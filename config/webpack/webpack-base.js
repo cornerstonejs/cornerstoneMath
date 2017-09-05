@@ -13,7 +13,12 @@ module.exports = {
   target: 'web',
   output: {
     filename: '[name].js',
-    library: '[name]',
+    library: {
+      commonjs: "cornerstone-math",
+      commonjs2: "cornerstone-math",
+      amd: "cornerstone-math",
+      root: 'cornerstoneMath'
+    },
     libraryTarget: 'umd',
     path: outputPath,
     umdNamedDefine: true
