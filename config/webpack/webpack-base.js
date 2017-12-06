@@ -15,7 +15,6 @@ module.exports = {
     filename: '[name].js',
     library: {
       commonjs: "cornerstone-math",
-      commonjs2: "cornerstone-math",
       amd: "cornerstone-math",
       root: 'cornerstoneMath'
     },

@@ -1,14 +1,14 @@
-/*! cornerstone-math - 0.1.6 - 2017-06-09 | (c) 2017 Chris Hafey | https://github.com/chafey/cornerstoneTools */
+/*! cornerstone-math - 0.1.6 - 2017-12-06 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/cornerstoneMath */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("cornerstoneMath", [], factory);
+		define("cornerstone-math", [], factory);
 	else if(typeof exports === 'object')
-		exports["cornerstoneMath"] = factory();
+		exports["cornerstone-math"] = factory();
 	else
 		root["cornerstoneMath"] = factory();
-})(this, function() {
+})(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -44,9 +44,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -74,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -87,49 +84,12 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// Based on THREE.JS
-function clamp(x, a, b) {
-  return x < a ? a : x > b ? b : x;
-}
 
-function degToRad(degrees) {
-  var degreeToRadiansFactor = Math.PI / 180;
-
-  return degrees * degreeToRadiansFactor;
-}
-
-function radToDeg(radians) {
-  var radianToDegreesFactor = 180 / Math.PI;
-
-  return radians * radianToDegreesFactor;
-}
-
-// Returns sign of number
-function sign(x) {
-  return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
-}
-
-exports.clamp = clamp;
-exports.degToRad = degToRad;
-exports.radToDeg = radToDeg;
-exports.sign = sign;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _quaternion = __webpack_require__(3);
+var _quaternion = __webpack_require__(2);
 
 var _quaternion2 = _interopRequireDefault(_quaternion);
 
-var _math = __webpack_require__(0);
+var _math = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -760,6 +720,43 @@ Vector3.prototype = {
 exports.default = Vector3;
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Based on THREE.JS
+function clamp(x, a, b) {
+  return x < a ? a : x > b ? b : x;
+}
+
+function degToRad(degrees) {
+  var degreeToRadiansFactor = Math.PI / 180;
+
+  return degrees * degreeToRadiansFactor;
+}
+
+function radToDeg(radians) {
+  var radianToDegreesFactor = 180 / Math.PI;
+
+  return radians * radianToDegreesFactor;
+}
+
+// Returns sign of number
+function sign(x) {
+  return typeof x === 'number' ? x ? x < 0 ? -1 : 1 : x === x ? 0 : NaN : NaN;
+}
+
+exports.clamp = clamp;
+exports.degToRad = degToRad;
+exports.radToDeg = radToDeg;
+exports.sign = sign;
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -769,8 +766,108 @@ exports.default = Vector3;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var Quaternion = function Quaternion(x, y, z, w) {
+  this.x = x || 0;
+  this.y = y || 0;
+  this.z = z || 0;
+  this.w = w !== undefined ? w : 1;
+};
 
-var _math = __webpack_require__(0);
+Quaternion.prototype.setFromAxisAngle = function (axis, angle) {
+  var halfAngle = angle / 2,
+      s = Math.sin(halfAngle);
+
+  this.x = axis.x * s;
+  this.y = axis.y * s;
+  this.z = axis.z * s;
+  this.w = Math.cos(halfAngle);
+
+  return this;
+};
+
+Quaternion.prototype.multiplyQuaternions = function (a, b) {
+  var qax = a.x,
+      qay = a.y,
+      qaz = a.z,
+      qaw = a.w;
+  var qbx = b.x,
+      qby = b.y,
+      qbz = b.z,
+      qbw = b.w;
+
+  this.x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
+  this.y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+  this.z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
+  this.w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
+
+  return this;
+};
+
+Quaternion.prototype.setFromRotationMatrix = function (m) {
+  var te = m.elements,
+      m11 = te[0],
+      m12 = te[4],
+      m13 = te[8],
+      m21 = te[1],
+      m22 = te[5],
+      m23 = te[9],
+      m31 = te[2],
+      m32 = te[6],
+      m33 = te[10],
+      trace = m11 + m22 + m33,
+      s = void 0;
+
+  if (trace > 0) {
+
+    s = 0.5 / Math.sqrt(trace + 1.0);
+
+    this.w = 0.25 / s;
+    this.x = (m32 - m23) * s;
+    this.y = (m13 - m31) * s;
+    this.z = (m21 - m12) * s;
+  } else if (m11 > m22 && m11 > m33) {
+
+    s = 2.0 * Math.sqrt(1.0 + m11 - m22 - m33);
+
+    this.w = (m32 - m23) / s;
+    this.x = 0.25 * s;
+    this.y = (m12 + m21) / s;
+    this.z = (m13 + m31) / s;
+  } else if (m22 > m33) {
+
+    s = 2.0 * Math.sqrt(1.0 + m22 - m11 - m33);
+
+    this.w = (m13 - m31) / s;
+    this.x = (m12 + m21) / s;
+    this.y = 0.25 * s;
+    this.z = (m23 + m32) / s;
+  } else {
+
+    s = 2.0 * Math.sqrt(1.0 + m33 - m11 - m22);
+
+    this.w = (m21 - m12) / s;
+    this.x = (m13 + m31) / s;
+    this.y = (m23 + m32) / s;
+    this.z = 0.25 * s;
+  }
+
+  return this;
+};
+
+exports.default = Quaternion;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _math = __webpack_require__(1);
 
 // Based on  http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr(x) {
@@ -903,107 +1000,119 @@ var lineSegment = {
 exports.default = lineSegment;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+         value: true
 });
-var Quaternion = function Quaternion(x, y, z, w) {
-  this.x = x || 0;
-  this.y = y || 0;
-  this.z = z || 0;
-  this.w = w !== undefined ? w : 1;
-};
 
-Quaternion.prototype.setFromAxisAngle = function (axis, angle) {
-  var halfAngle = angle / 2,
-      s = Math.sin(halfAngle);
+var _Line = __webpack_require__(5);
 
-  this.x = axis.x * s;
-  this.y = axis.y * s;
-  this.z = axis.z * s;
-  this.w = Math.cos(halfAngle);
+Object.defineProperty(exports, 'Line3', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_Line).default;
+         }
+});
 
-  return this;
-};
+var _lineSegment = __webpack_require__(3);
 
-Quaternion.prototype.multiplyQuaternions = function (a, b) {
-  var qax = a.x,
-      qay = a.y,
-      qaz = a.z,
-      qaw = a.w;
-  var qbx = b.x,
-      qby = b.y,
-      qbz = b.z,
-      qbw = b.w;
+Object.defineProperty(exports, 'lineSegment', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_lineSegment).default;
+         }
+});
 
-  this.x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
-  this.y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
-  this.z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
-  this.w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
+var _math = __webpack_require__(1);
 
-  return this;
-};
+Object.defineProperty(exports, 'clamp', {
+         enumerable: true,
+         get: function get() {
+                  return _math.clamp;
+         }
+});
+Object.defineProperty(exports, 'degToRad', {
+         enumerable: true,
+         get: function get() {
+                  return _math.degToRad;
+         }
+});
+Object.defineProperty(exports, 'radToDeg', {
+         enumerable: true,
+         get: function get() {
+                  return _math.radToDeg;
+         }
+});
+Object.defineProperty(exports, 'sign', {
+         enumerable: true,
+         get: function get() {
+                  return _math.sign;
+         }
+});
 
-Quaternion.prototype.setFromRotationMatrix = function (m) {
-  var te = m.elements,
-      m11 = te[0],
-      m12 = te[4],
-      m13 = te[8],
-      m21 = te[1],
-      m22 = te[5],
-      m23 = te[9],
-      m31 = te[2],
-      m32 = te[6],
-      m33 = te[10],
-      trace = m11 + m22 + m33,
-      s = void 0;
+var _matrix = __webpack_require__(6);
 
-  if (trace > 0) {
+Object.defineProperty(exports, 'Matrix4', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_matrix).default;
+         }
+});
 
-    s = 0.5 / Math.sqrt(trace + 1.0);
+var _plane = __webpack_require__(7);
 
-    this.w = 0.25 / s;
-    this.x = (m32 - m23) * s;
-    this.y = (m13 - m31) * s;
-    this.z = (m21 - m12) * s;
-  } else if (m11 > m22 && m11 > m33) {
+Object.defineProperty(exports, 'Plane', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_plane).default;
+         }
+});
 
-    s = 2.0 * Math.sqrt(1.0 + m11 - m22 - m33);
+var _point = __webpack_require__(8);
 
-    this.w = (m32 - m23) / s;
-    this.x = 0.25 * s;
-    this.y = (m12 + m21) / s;
-    this.z = (m13 + m31) / s;
-  } else if (m22 > m33) {
+Object.defineProperty(exports, 'point', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_point).default;
+         }
+});
 
-    s = 2.0 * Math.sqrt(1.0 + m22 - m11 - m33);
+var _quaternion = __webpack_require__(2);
 
-    this.w = (m13 - m31) / s;
-    this.x = (m12 + m21) / s;
-    this.y = 0.25 * s;
-    this.z = (m23 + m32) / s;
-  } else {
+Object.defineProperty(exports, 'quaternion', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_quaternion).default;
+         }
+});
 
-    s = 2.0 * Math.sqrt(1.0 + m33 - m11 - m22);
+var _rect = __webpack_require__(9);
 
-    this.w = (m21 - m12) / s;
-    this.x = (m13 + m31) / s;
-    this.y = (m23 + m32) / s;
-    this.z = 0.25 * s;
-  }
+Object.defineProperty(exports, 'rect', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_rect).default;
+         }
+});
 
-  return this;
-};
+var _vector = __webpack_require__(0);
 
-exports.default = Quaternion;
+Object.defineProperty(exports, 'Vector3', {
+         enumerable: true,
+         get: function get() {
+                  return _interopRequireDefault(_vector).default;
+         }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1015,11 +1124,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _vector = __webpack_require__(1);
+var _vector = __webpack_require__(0);
 
 var _vector2 = _interopRequireDefault(_vector);
 
-var _math = __webpack_require__(0);
+var _math = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1188,7 +1297,7 @@ var Line3 = function () {
 exports.default = Line3;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1198,7 +1307,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vector = __webpack_require__(1);
+var _vector = __webpack_require__(0);
 
 var _vector2 = _interopRequireDefault(_vector);
 
@@ -1472,7 +1581,7 @@ Matrix4.prototype.makeScale = function (x, y, z) {
 exports.default = Matrix4;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1482,7 +1591,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vector = __webpack_require__(1);
+var _vector = __webpack_require__(0);
 
 var _vector2 = _interopRequireDefault(_vector);
 
@@ -1687,7 +1796,7 @@ Plane.prototype = {
 exports.default = Plane;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1777,7 +1886,7 @@ var point = {
 exports.default = point;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1787,7 +1896,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lineSegment = __webpack_require__(2);
+var _lineSegment = __webpack_require__(3);
 
 var _lineSegment2 = _interopRequireDefault(_lineSegment);
 
@@ -1965,118 +2074,6 @@ var rect = {
 };
 
 exports.default = rect;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-         value: true
-});
-
-var _Line = __webpack_require__(4);
-
-Object.defineProperty(exports, 'Line3', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_Line).default;
-         }
-});
-
-var _lineSegment = __webpack_require__(2);
-
-Object.defineProperty(exports, 'lineSegment', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_lineSegment).default;
-         }
-});
-
-var _math = __webpack_require__(0);
-
-Object.defineProperty(exports, 'clamp', {
-         enumerable: true,
-         get: function get() {
-                  return _math.clamp;
-         }
-});
-Object.defineProperty(exports, 'degToRad', {
-         enumerable: true,
-         get: function get() {
-                  return _math.degToRad;
-         }
-});
-Object.defineProperty(exports, 'radToDeg', {
-         enumerable: true,
-         get: function get() {
-                  return _math.radToDeg;
-         }
-});
-Object.defineProperty(exports, 'sign', {
-         enumerable: true,
-         get: function get() {
-                  return _math.sign;
-         }
-});
-
-var _matrix = __webpack_require__(5);
-
-Object.defineProperty(exports, 'Matrix4', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_matrix).default;
-         }
-});
-
-var _plane = __webpack_require__(6);
-
-Object.defineProperty(exports, 'Plane', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_plane).default;
-         }
-});
-
-var _point = __webpack_require__(7);
-
-Object.defineProperty(exports, 'point', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_point).default;
-         }
-});
-
-var _quaternion = __webpack_require__(3);
-
-Object.defineProperty(exports, 'quaternion', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_quaternion).default;
-         }
-});
-
-var _rect = __webpack_require__(8);
-
-Object.defineProperty(exports, 'rect', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_rect).default;
-         }
-});
-
-var _vector = __webpack_require__(1);
-
-Object.defineProperty(exports, 'Vector3', {
-         enumerable: true,
-         get: function get() {
-                  return _interopRequireDefault(_vector).default;
-         }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ })
 /******/ ]);

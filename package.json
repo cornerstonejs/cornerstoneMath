@@ -12,12 +12,12 @@
     "computation geometry"
   ],
   "author": "Chris Hafey",
-  "homepage": "https://github.com/chafey/cornerstoneMath",
+  "homepage": "https://github.com/cornerstonejs/cornerstoneMath",
   "license": "MIT",
   "module": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chafey/cornerstoneMath.git"
+    "url": "https://github.com/cornerstonejs/cornerstoneMath.git"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.js src",
