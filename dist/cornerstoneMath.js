@@ -1,4 +1,4 @@
-/*! cornerstone-math - 0.1.6 - 2017-12-06 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/cornerstoneMath */
+/*! cornerstone-math - 0.1.6 - 2018-02-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/cornerstoneMath */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
