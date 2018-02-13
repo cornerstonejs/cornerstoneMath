@@ -199,7 +199,7 @@ Vector3.prototype = {
         quaternion = new Quaternion();
       }
 
-      this.applyQuaternion(quaternion.setFromAxisAngle(axis, angle));
+      this.applyQuaternion(quaternion.setFromAxisAngle(axis.normalize(), angle));
 
       return this;
 
