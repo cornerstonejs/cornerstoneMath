@@ -130,7 +130,7 @@ class Line3 {
   }
 
   intersectLine (line) {
-        // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
+    // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
     const da = this.end.clone().sub(this.start);
     const db = line.end.clone().sub(line.start);
     const dc = line.start.clone().sub(this.start);
@@ -138,14 +138,14 @@ class Line3 {
     const daCrossDb = da.clone().cross(db);
     const dcCrossDb = dc.clone().cross(db);
 
+    // Lines are not coplanar, stop here
     if (dc.dot(da) === 0) {
-            // Lines are not coplanar, stop here
       return;
     }
 
     const s = dcCrossDb.dot(daCrossDb) / daCrossDb.lengthSq();
 
-        // Make sure we have an intersection
+    // Make sure we have an intersection
     if (s > 1.0 || isNaN(s)) {
       return;
     }

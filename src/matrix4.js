@@ -4,8 +4,8 @@ import Vector3 from './vector3.js';
 const Matrix4 = function Matrix4 (n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44) {
   this.elements = new Float32Array(16);
 
-    // TODO: if n11 is undefined, then just set to identity, otherwise copy all other values into matrix
-    //   We should not support semi specification of Matrix4, it is just weird.
+  // TODO: if n11 is undefined, then just set to identity, otherwise copy all other values into matrix
+  // We should not support semi specification of Matrix4, it is just weird.
 
   const te = this.elements;
 
@@ -47,12 +47,12 @@ Matrix4.prototype.makeRotationFromQuaternion = function (q) {
   te[6] = yz + wx;
   te[10] = 1 - (xx + yy);
 
-    // Last column
+  // Last column
   te[3] = 0;
   te[7] = 0;
   te[11] = 0;
 
-    // Bottom row
+  // Bottom row
   te[12] = 0;
   te[13] = 0;
   te[14] = 0;
@@ -137,7 +137,7 @@ Matrix4.prototype.multiply = function (m, n) {
 
 Matrix4.prototype.getInverse = function (m, throwOnInvertible) {
 
-    // Based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
+  // Based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
   const te = this.elements;
   const me = m.elements;
 
@@ -238,13 +238,11 @@ Matrix4.prototype.applyToVector3Array = function () {
 Matrix4.prototype.makeTranslation = function (x, y, z) {
 
   this.set(
-
-        1, 0, 0, x,
-        0, 1, 0, y,
-        0, 0, 1, z,
-        0, 0, 0, 1
-
-    );
+    1, 0, 0, x,
+    0, 1, 0, y,
+    0, 0, 1, z,
+    0, 0, 0, 1
+  );
 
   return this;
 
@@ -277,13 +275,11 @@ Matrix4.prototype.set = function (n11, n12, n13, n14, n21, n22, n23, n24, n31, n
 Matrix4.prototype.makeScale = function (x, y, z) {
 
   this.set(
-
-        x, 0, 0, 0,
-        0, y, 0, 0,
-        0, 0, z, 0,
-        0, 0, 0, 1
-
-    );
+    x, 0, 0, 0,
+    0, y, 0, 0,
+    0, 0, z, 0,
+    0, 0, 0, 1
+  );
 
   return this;
 
