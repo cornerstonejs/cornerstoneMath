@@ -1,4 +1,9 @@
-.idea/*
-bower_components
-node_modules
-build
+## Directorties
+coverage/
+dist/
+documentation/
+node_modules/
+
+## Files
+.idea
+npm-debug.log
