@@ -225,7 +225,7 @@ Vector3.prototype = {
 
   applyMatrix4 (m) {
 
-        // Input: THREE.Matrix4 affine matrix
+    // Input: THREE.Matrix4 affine matrix
 
     let x = this.x,
       y = this.y,
@@ -243,7 +243,7 @@ Vector3.prototype = {
 
   applyProjection (m) {
 
-        // Input: THREE.Matrix4 projection matrix
+    // Input: THREE.Matrix4 projection matrix
 
     let x = this.x,
       y = this.y,
@@ -271,14 +271,14 @@ Vector3.prototype = {
     const qz = q.z;
     const qw = q.w;
 
-        // Calculate quat * vector
+    // Calculate quat * vector
 
     const ix = qw * x + qy * z - qz * y;
     const iy = qw * y + qz * x - qx * z;
     const iz = qw * z + qx * y - qy * x;
     const iw = -qx * x - qy * y - qz * z;
 
-        // Calculate result * inverse quat
+    // Calculate result * inverse quat
 
     this.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;
     this.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;
@@ -290,8 +290,8 @@ Vector3.prototype = {
 
   transformDirection (m) {
 
-        // Input: THREE.Matrix4 affine matrix
-        // Vector interpreted as a direction
+    // Input: THREE.Matrix4 affine matrix
+    // Vector interpreted as a direction
 
     let x = this.x,
       y = this.y,
@@ -391,7 +391,7 @@ Vector3.prototype = {
 
   clamp (min, max) {
 
-        // This function assumes min < max, if this assumption isn't true it will not operate correctly
+    // This function assumes min < max, if this assumption isn't true it will not operate correctly
 
     if (this.x < min.x) {
 
@@ -627,8 +627,8 @@ Vector3.prototype = {
 
   reflect: (function () {
 
-        // Reflect incident vector off plane orthogonal to normal
-        // Normal is assumed to have unit length
+    // Reflect incident vector off plane orthogonal to normal
+    // Normal is assumed to have unit length
 
     let v1;
 
@@ -648,7 +648,7 @@ Vector3.prototype = {
 
     const theta = this.dot(v) / (this.length() * v.length());
 
-        // Clamp, to handle numerical problems
+    // Clamp, to handle numerical problems
 
     return Math.acos(clamp(theta, -1, 1));
 

@@ -37,7 +37,8 @@ Plane.prototype = {
   setFromNormalAndCoplanarPoint (normal, point) {
 
     this.normal.copy(normal);
-    this.constant = -point.dot(this.normal); // Must be this.normal, not normal, as this.normal is normalized
+    // Must be this.normal, not normal, as this.normal is normalized
+    this.constant = -point.dot(this.normal);
 
     return this;
 
@@ -52,7 +53,7 @@ Plane.prototype = {
 
       const normal = v1.subVectors(c, b).cross(v2.subVectors(a, b)).normalize();
 
-            // Q: should an error be thrown if normal is zero (e.g. degenerate plane)?
+      // Q: should an error be thrown if normal is zero (e.g. degenerate plane)?
 
       this.setFromNormalAndCoplanarPoint(normal, a);
 
@@ -74,7 +75,7 @@ Plane.prototype = {
 
   normalize () {
 
-        // Note: will lead to a divide by zero if the plane is invalid.
+    // Note: will lead to a divide by zero if the plane is invalid.
 
     const inverseNormalLength = 1.0 / this.normal.length();
 
@@ -125,7 +126,7 @@ Plane.prototype = {
 
   isIntersectionLine (line) {
 
-        // Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
+    // Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
 
     const startSign = this.distanceToPoint(line.start);
     const endSign = this.distanceToPoint(line.end);
@@ -148,14 +149,14 @@ Plane.prototype = {
 
       if (denominator === 0) {
 
-                // Line is coplanar, return origin
+        // Line is coplanar, return origin
         if (this.distanceToPoint(line.start) === 0) {
 
           return result.copy(line.start);
 
         }
 
-                // Unsure if this is the correct method to handle this case.
+        // Unsure if this is the correct method to handle this case.
         return undefined;
 
       }
@@ -175,7 +176,7 @@ Plane.prototype = {
   })(),
 
   intersectPlane (targetPlane) {
-        // Returns the intersection line between two planes
+    // Returns the intersection line between two planes
     const direction = this.normal.clone().cross(targetPlane.normal);
     const origin = new Vector3();
     const intersectionData = {
@@ -183,8 +184,7 @@ Plane.prototype = {
       direction
     };
 
-        // If the planes are parallel, return an empty vector for the
-        // Intersection line
+    // If the planes are parallel, return an empty vector for the intersection line
     if (this.normal.clone().cross(targetPlane.normal).length < 1e-10) {
       intersectionData.direction = new Vector3();
 
