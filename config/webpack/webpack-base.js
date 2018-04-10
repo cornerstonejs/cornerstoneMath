@@ -1,14 +1,14 @@
 const path = require('path');
-const webpack = require('webpack');
 const rootPath = process.cwd();
 const context = path.join(rootPath, "src");
 const outputPath = path.join(rootPath, 'dist');
 const bannerPlugin = require(path.join(__dirname, 'plugins', 'banner.js'));
 
 module.exports = {
+  mode: 'development',
   context: context,
   entry: {
-    cornerstoneMath: path.join(context, 'index.js')
+    cornerstoneMath: './index.js'
   },
   target: 'web',
   output: {
@@ -23,11 +23,6 @@ module.exports = {
     umdNamedDefine: true
   },
   devtool: 'source-map',
-  externals: {
-    jquery: {
-      root: '$'
-    }
-  },
   module: {
     rules: [{
       enforce: 'pre',
