@@ -38,6 +38,7 @@
     "test:all": "npm run test:chrome && npm run test:firefox",
     "version": "node -p -e \"'export default \\'' + require('./package.json').version + '\\';'\" > src/version.js",
     "start": "npm run webpack",
+    "start:dev": "webpack-dev-server --config ./config/webpack/webpack-dev",
     "watch": "npm run webpack:watch",
     "webpack": "npm run clean:dist && npm run webpack:prod && npm run webpack:dev",
     "webpack:dev": "webpack --progress --config ./config/webpack/webpack-dev",
@@ -68,6 +69,7 @@
     "shx": "^0.2.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13"
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
   }
 }
