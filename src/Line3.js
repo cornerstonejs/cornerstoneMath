@@ -71,30 +71,24 @@ class Line3 {
 
   }
 
-  closestPointToPointParameter () {
+  closestPointToPointParameter (point, clampToLine) {
 
     const startP = new Vector3();
     const startEnd = new Vector3();
 
-    return function (point, clampToLine) {
+    startP.subVectors(point, this.start);
+    startEnd.subVectors(this.end, this.start);
 
-      startP.subVectors(point, this.start);
-      startEnd.subVectors(this.end, this.start);
+    const startEnd2 = startEnd.dot(startEnd);
+    const startEnd_startP = startEnd.dot(startP);
 
-      const startEnd2 = startEnd.dot(startEnd);
-      const startEnd_startP = startEnd.dot(startP);
+    let t = startEnd_startP / startEnd2;
 
-      let t = startEnd_startP / startEnd2;
+    if (clampToLine) {
+      t = clamp(t, 0, 1);
+    }
 
-      if (clampToLine) {
-
-        t = clamp(t, 0, 1);
-
-      }
-
-      return t;
-
-    };
+    return t;
 
   }
 
