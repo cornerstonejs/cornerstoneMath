@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import Line3 from '../src/line3';
+import Line3 from '../src/Line3';
 import Vector3 from '../src/vector3';
 
 describe('Line3', function () {
@@ -23,6 +23,7 @@ describe('Line3', function () {
 
     // Testing clone
     const line3 = line2.clone();
+
     assert.deepEqual(line3.start, start, 'Clone works.');
     assert.deepEqual(line3.end, end, 'Clone works.');
   });
@@ -37,7 +38,9 @@ describe('Line3', function () {
     const start = new Vector3(0, 0, 0);
     const end = new Vector3(2, 0, 0);
     const line = new Line3(start, end);
-    const point = { x: 1, y: 1, z: 0 };
+    const point = { x: 1,
+      y: 1,
+      z: 0 };
 
     // Test non-clamped
     assert.equal(line.closestPointToPointParameter(point, false), 0.5);

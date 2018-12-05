@@ -131,7 +131,7 @@ describe('Vector3', function () {
     vector.applyAxisAngle(axis, angle2);
     // Application of quaternion returns a miniscule residual value in z
     assert.deepEqual([Math.round(vector.x * 1000) / 1000, vector.y, Math.round(vector.z)],
-     [1.414, 1, -0], 'Vector rotated correctly.');
+      [1.414, 1, -0], 'Vector rotated correctly.');
     vector.x = 2; vector.y = 2; vector.z = 3;
     axis.x = 1; axis.y = 1; axis.z = 0;
     const angle3 = 2 * Math.PI - Math.PI / 4;
@@ -157,10 +157,10 @@ describe('Vector3', function () {
     // Testing divideScalar
     vector1.divideScalar(2);
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [Infinity, -0.25, 1 / (2 * Math.sqrt(2))], 'divideScalar works.');
+      [Infinity, -0.25, 1 / (2 * Math.sqrt(2))], 'divideScalar works.');
     vector1.divideScalar(0);
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [0, 0, 0], 'divideScalar works.');
+      [0, 0, 0], 'divideScalar works.');
   });
   it('min, max, clamp, clampScalar', function () {
     // Testing min
@@ -254,21 +254,21 @@ describe('Vector3', function () {
 
     vector1.projectOnVector(vector2); // Returned values are off at the last decimal digit
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [-1.7894736842105268, 2.68421052631579, 4.473684210526317], 'projectOnVector works.');
+      [-1.7894736842105268, 2.68421052631579, 4.473684210526317], 'projectOnVector works.');
     // Testing projectOnPlane
     const planeNormal = new Vector3(1, 0, 0);
 
     vector1.x = 1; vector1.y = 2; vector1.z = 3;
     vector1.projectOnPlane(planeNormal);
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [0, 2, 3], 'projectOnPlane works.');
+      [0, 2, 3], 'projectOnPlane works.');
     // Testing reflect
     const normal = new Vector3(0, 1, 0);
 
     vector1.x = 1; vector1.y = 2; vector1.z = 3;
     vector1.reflect(normal);
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [1, -2, 3], 'reflect works.');
+      [1, -2, 3], 'reflect works.');
   });
   it('angleTo, distanceTo, distanceToSquared', function () {
     // Testing angleTo
@@ -288,18 +288,18 @@ describe('Vector3', function () {
 
     vector.setFromMatrixPosition(matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
-     [4, 8, 12], 'setFromMatrixPosition works.');
+      [4, 8, 12], 'setFromMatrixPosition works.');
     // Testing setFromMatrixScale
     vector.setFromMatrixScale(matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
-     [Math.sqrt(107), Math.sqrt(140), Math.sqrt(179)], 'setFromMatrixScale works.');
+      [Math.sqrt(107), Math.sqrt(140), Math.sqrt(179)], 'setFromMatrixScale works.');
     // Testing setFromMatrixColumn
     vector.setFromMatrixColumn(100, matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
-     [undefined, undefined, undefined], 'setFromMatrixScale fails as expected.');
+      [undefined, undefined, undefined], 'setFromMatrixScale fails as expected.');
     vector.setFromMatrixColumn(3, matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
-     [4, 8, 12], 'setFromMatrixScale works.');
+      [4, 8, 12], 'setFromMatrixScale works.');
   });
   it('equals, fromArray, toArray, clone', function () {
     // Testing equals
@@ -312,14 +312,14 @@ describe('Vector3', function () {
     // Testing fromArray
     vector1.fromArray([Infinity, -20.4343, 25]);
     assert.deepEqual([vector1.x, vector1.y, vector1.z],
-     [Infinity, -20.4343, 25], 'fromArray works.');
+      [Infinity, -20.4343, 25], 'fromArray works.');
     // Testing toArray
     assert.deepEqual(vector2.toArray(),
-     [1, 0, 0], 'toArray works.');
+      [1, 0, 0], 'toArray works.');
     // Testing clone
     const clonedVector = vector1.clone();
 
     assert.deepEqual([clonedVector.x, clonedVector.y, clonedVector.z],
-     [Infinity, -20.4343, 25], 'clone works.');
+      [Infinity, -20.4343, 25], 'clone works.');
   });
 });
