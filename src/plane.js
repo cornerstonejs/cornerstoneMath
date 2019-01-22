@@ -5,16 +5,13 @@ import Vector3 from './vector3.js';
  * @author bhouston / http://exocortex.com
  */
 
-const Plane = function (normal, constant) {
+class Plane {
+  constructor (normal, constant) {
 
-  this.normal = (normal !== undefined) ? normal : new Vector3(1, 0, 0);
-  this.constant = (constant !== undefined) ? constant : 0;
+    this.normal = (normal !== undefined) ? normal : new Vector3(1, 0, 0);
+    this.constant = (constant !== undefined) ? constant : 0;
 
-};
-
-Plane.prototype = {
-
-  constructor: Plane,
+  }
 
   set (normal, constant) {
 
@@ -23,7 +20,7 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   setComponents (x, y, z, w) {
 
@@ -32,7 +29,7 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   setFromNormalAndCoplanarPoint (normal, point) {
 
@@ -42,27 +39,7 @@ Plane.prototype = {
 
     return this;
 
-  },
-
-  setFromCoplanarPoints: (function () {
-
-    const v1 = new Vector3();
-    const v2 = new Vector3();
-
-    return function (a, b, c) {
-
-      const normal = v1.subVectors(c, b).cross(v2.subVectors(a, b)).normalize();
-
-      // Q: should an error be thrown if normal is zero (e.g. degenerate plane)?
-
-      this.setFromNormalAndCoplanarPoint(normal, a);
-
-      return this;
-
-    };
-
-  })(),
-
+  }
 
   copy (plane) {
 
@@ -71,7 +48,7 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   normalize () {
 
@@ -84,7 +61,7 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   negate () {
 
@@ -93,25 +70,25 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   distanceToPoint (point) {
 
     return this.normal.dot(point) + this.constant;
 
-  },
+  }
 
   distanceToSphere (sphere) {
 
     return this.distanceToPoint(sphere.center) - sphere.radius;
 
-  },
+  }
 
   projectPoint (point, optionalTarget) {
 
     return this.orthoPoint(point, optionalTarget).sub(point).negate();
 
-  },
+  }
 
   orthoPoint (point, optionalTarget) {
 
@@ -122,7 +99,7 @@ Plane.prototype = {
 
     return result.copy(this.normal).multiplyScalar(perpendicularMagnitude);
 
-  },
+  }
 
   isIntersectionLine (line) {
 
@@ -133,47 +110,7 @@ Plane.prototype = {
 
     return (startSign < 0 && endSign > 0) || (endSign < 0 && startSign > 0);
 
-  },
-
-  intersectLine: (function () {
-
-    const v1 = new Vector3();
-
-    return function (line, optionalTarget) {
-
-      const result = optionalTarget || new Vector3();
-
-      const direction = line.delta(v1);
-
-      const denominator = this.normal.dot(direction);
-
-      if (denominator === 0) {
-
-        // Line is coplanar, return origin
-        if (this.distanceToPoint(line.start) === 0) {
-
-          return result.copy(line.start);
-
-        }
-
-        // Unsure if this is the correct method to handle this case.
-        return undefined;
-
-      }
-
-      const t = -(line.start.dot(this.normal) + this.constant) / denominator;
-
-      if (t < 0 || t > 1) {
-
-        return undefined;
-
-      }
-
-      return result.copy(direction).multiplyScalar(t).add(line.start);
-
-    };
-
-  })(),
+  }
 
   intersectPlane (targetPlane) {
     // Returns the intersection line between two planes
@@ -201,7 +138,7 @@ Plane.prototype = {
     intersectionData.origin = this.normal.clone().multiplyScalar(c1).add(targetPlane.normal.clone().multiplyScalar(c2));
 
     return intersectionData;
-  },
+  }
 
   coplanarPoint (optionalTarget) {
 
@@ -210,7 +147,7 @@ Plane.prototype = {
 
     return result.copy(this.normal).multiplyScalar(-this.constant);
 
-  },
+  }
 
   translate (offset) {
 
@@ -218,19 +155,78 @@ Plane.prototype = {
 
     return this;
 
-  },
+  }
 
   equals (plane) {
 
     return plane.normal.equals(this.normal) && (plane.constant === this.constant);
 
-  },
+  }
 
   clone () {
 
     return new Plane().copy(this);
 
   }
-};
+}
+
+Plane.prototype.setFromCoplanarPoints = (function () {
+
+  const v1 = new Vector3();
+  const v2 = new Vector3();
+
+  return function (a, b, c) {
+
+    const normal = v1.subVectors(c, b).cross(v2.subVectors(a, b)).normalize();
+
+    // Q: should an error be thrown if normal is zero (e.g. degenerate plane)?
+
+    this.setFromNormalAndCoplanarPoint(normal, a);
+
+    return this;
+
+  };
+
+})();
+
+Plane.prototype.intersectLine = (function () {
+
+  const v1 = new Vector3();
+
+  return function (line, optionalTarget) {
+
+    const result = optionalTarget || new Vector3();
+
+    const direction = line.delta(v1);
+
+    const denominator = this.normal.dot(direction);
+
+    if (denominator === 0) {
+
+      // Line is coplanar, return origin
+      if (this.distanceToPoint(line.start) === 0) {
+
+        return result.copy(line.start);
+
+      }
+
+      // Unsure if this is the correct method to handle this case.
+      return undefined;
+
+    }
+
+    const t = -(line.start.dot(this.normal) + this.constant) / denominator;
+
+    if (t < 0 || t > 1) {
+
+      return undefined;
+
+    }
+
+    return result.copy(direction).multiplyScalar(t).add(line.start);
+
+  };
+
+})();
 
 export default Plane;
