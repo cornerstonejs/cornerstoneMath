@@ -2,17 +2,13 @@ import Quaternion from './quaternion.js';
 import { clamp } from './math.js';
 
 // Based on THREE.JS
-const Vector3 = function (x, y, z) {
+class Vector3 {
 
-  this.x = x || 0;
-  this.y = y || 0;
-  this.z = z || 0;
-
-};
-
-Vector3.prototype = {
-
-  constructor: Vector3,
+  constructor (x, y, z) {
+    this.x = x || 0;
+    this.y = y || 0;
+    this.z = z || 0;
+  }
 
   set (x, y, z) {
 
@@ -22,7 +18,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   setX (x) {
 
@@ -30,7 +26,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   setY (y) {
 
@@ -38,7 +34,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   setZ (z) {
 
@@ -46,7 +42,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   setComponent (index, value) {
 
@@ -59,7 +55,7 @@ Vector3.prototype = {
 
     }
 
-  },
+  }
 
   getComponent (index) {
 
@@ -72,7 +68,7 @@ Vector3.prototype = {
 
     }
 
-  },
+  }
 
   copy (v) {
 
@@ -82,7 +78,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   add (v, w) {
 
@@ -100,7 +96,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   addScalar (s) {
 
@@ -110,7 +106,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   addVectors (a, b) {
 
@@ -120,7 +116,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   sub (v, w) {
 
@@ -138,7 +134,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   subVectors (a, b) {
 
@@ -148,7 +144,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   multiply (v, w) {
 
@@ -166,7 +162,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   multiplyScalar (scalar) {
 
@@ -176,7 +172,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   multiplyVectors (a, b) {
 
@@ -186,26 +182,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
-
-
-  applyAxisAngle: (function () {
-
-    let quaternion;
-
-    return function (axis, angle) {
-
-      if (quaternion === undefined) {
-        quaternion = new Quaternion();
-      }
-
-      this.applyQuaternion(quaternion.setFromAxisAngle(axis.normalize(), angle));
-
-      return this;
-
-    };
-
-  })(),
+  }
 
   applyMatrix3 (m) {
 
@@ -221,7 +198,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   applyMatrix4 (m) {
 
@@ -239,7 +216,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   applyProjection (m) {
 
@@ -258,7 +235,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   applyQuaternion (q) {
 
@@ -286,7 +263,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   transformDirection (m) {
 
@@ -307,7 +284,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   divide (v) {
 
@@ -317,7 +294,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   divideScalar (scalar) {
 
@@ -339,7 +316,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   min (v) {
 
@@ -363,7 +340,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   max (v) {
 
@@ -387,7 +364,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   clamp (min, max) {
 
@@ -425,29 +402,8 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
-  clampScalar: (function () {
-
-    let min, max;
-
-    return function (minVal, maxVal) {
-
-      if (min === undefined) {
-
-        min = new Vector3();
-        max = new Vector3();
-
-      }
-
-      min.set(minVal, minVal, minVal);
-      max.set(maxVal, maxVal, maxVal);
-
-      return this.clamp(min, max);
-
-    };
-
-  })(),
 
   floor () {
 
@@ -457,7 +413,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   ceil () {
 
@@ -467,7 +423,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   round () {
 
@@ -477,7 +433,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   roundToZero () {
 
@@ -487,43 +443,43 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   negate () {
 
     return this.multiplyScalar(-1);
 
-  },
+  }
 
   dot (v) {
 
     return this.x * v.x + this.y * v.y + this.z * v.z;
 
-  },
+  }
 
   lengthSq () {
 
     return this.x * this.x + this.y * this.y + this.z * this.z;
 
-  },
+  }
 
   length () {
 
     return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 
-  },
+  }
 
   lengthManhattan () {
 
     return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);
 
-  },
+  }
 
   normalize () {
 
     return this.divideScalar(this.length());
 
-  },
+  }
 
   setLength (l) {
 
@@ -536,7 +492,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   lerp (v, alpha) {
 
@@ -546,7 +502,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   cross (v, w) {
 
@@ -568,7 +524,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   crossVectors (a, b) {
 
@@ -585,64 +541,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
-
-  projectOnVector: (function () {
-
-    let v1, dot;
-
-    return function (vector) {
-
-      if (v1 === undefined) {
-        v1 = new Vector3();
-      }
-
-      v1.copy(vector).normalize();
-
-      dot = this.dot(v1);
-
-      return this.copy(v1).multiplyScalar(dot);
-
-    };
-
-  })(),
-
-  projectOnPlane: (function () {
-
-    let v1;
-
-    return function (planeNormal) {
-
-      if (v1 === undefined) {
-        v1 = new Vector3();
-      }
-
-      v1.copy(this).projectOnVector(planeNormal);
-
-      return this.sub(v1);
-
-    };
-
-  })(),
-
-  reflect: (function () {
-
-    // Reflect incident vector off plane orthogonal to normal
-    // Normal is assumed to have unit length
-
-    let v1;
-
-    return function (normal) {
-
-      if (v1 === undefined) {
-        v1 = new Vector3();
-      }
-
-      return this.sub(v1.copy(normal).multiplyScalar(2 * this.dot(normal)));
-
-    };
-
-  })(),
+  }
 
   angleTo (v) {
 
@@ -652,13 +551,13 @@ Vector3.prototype = {
 
     return Math.acos(clamp(theta, -1, 1));
 
-  },
+  }
 
   distanceTo (v) {
 
     return Math.sqrt(this.distanceToSquared(v));
 
-  },
+  }
 
   distanceToSquared (v) {
 
@@ -668,7 +567,7 @@ Vector3.prototype = {
 
     return dx * dx + dy * dy + dz * dz;
 
-  },
+  }
 
   setFromMatrixPosition (m) {
 
@@ -678,7 +577,7 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   setFromMatrixScale (m) {
 
@@ -691,7 +590,7 @@ Vector3.prototype = {
     this.z = sz;
 
     return this;
-  },
+  }
 
   setFromMatrixColumn (index, matrix) {
 
@@ -705,13 +604,13 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   equals (v) {
 
     return ((v.x === this.x) && (v.y === this.y) && (v.z === this.z));
 
-  },
+  }
 
   fromArray (array) {
 
@@ -721,20 +620,117 @@ Vector3.prototype = {
 
     return this;
 
-  },
+  }
 
   toArray () {
 
     return [this.x, this.y, this.z];
 
-  },
+  }
 
   clone () {
 
     return new Vector3(this.x, this.y, this.z);
 
   }
+}
 
-};
+Vector3.prototype.projectOnVector = (function () {
+
+  let v1, dot;
+
+  return function (vector) {
+
+    if (v1 === undefined) {
+      v1 = new Vector3();
+    }
+
+    v1.copy(vector).normalize();
+
+    dot = this.dot(v1);
+
+    return this.copy(v1).multiplyScalar(dot);
+
+  };
+
+})();
+
+Vector3.prototype.projectOnPlane = (function () {
+
+  let v1;
+
+  return function (planeNormal) {
+
+    if (v1 === undefined) {
+      v1 = new Vector3();
+    }
+
+    v1.copy(this).projectOnVector(planeNormal);
+
+    return this.sub(v1);
+
+  };
+
+})();
+
+Vector3.prototype.reflect = (function () {
+
+  // Reflect incident vector off plane orthogonal to normal
+  // Normal is assumed to have unit length
+
+  let v1;
+
+  return function (normal) {
+
+    if (v1 === undefined) {
+      v1 = new Vector3();
+    }
+
+    return this.sub(v1.copy(normal).multiplyScalar(2 * this.dot(normal)));
+
+  };
+
+})();
+
+
+Vector3.prototype.clampScalar = (function () {
+
+  let min, max;
+
+  return function (minVal, maxVal) {
+
+    if (min === undefined) {
+
+      min = new Vector3();
+      max = new Vector3();
+
+    }
+
+    min.set(minVal, minVal, minVal);
+    max.set(maxVal, maxVal, maxVal);
+
+    return this.clamp(min, max);
+
+  };
+
+})();
+
+Vector3.prototype.applyAxisAngle = (function () {
+
+  let quaternion;
+
+  return function (axis, angle) {
+
+    if (quaternion === undefined) {
+      quaternion = new Quaternion();
+    }
+
+    this.applyQuaternion(quaternion.setFromAxisAngle(axis.normalize(), angle));
+
+    return this;
+
+  };
+
+})();
 
 export default Vector3;
