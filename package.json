@@ -69,7 +69,7 @@
     "puppeteer": "^1.2.0",
     "shx": "^0.2.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^4.29.0",
+    "webpack": "^4.4.1",
     "webpack-cli": "^2.1.4",
     "webpack-dev-server": "^3.1.4"
   }
