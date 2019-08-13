@@ -1,6 +1,6 @@
 import { assert, expect } from 'chai';
 import Vector3 from '../src/vector3';
-import Matrix4 from '../src/matrix4.js';
+import Matrix4 from '../src/matrix4';
 
 describe('Vector3', function () {
   it('constructor, copy, clone', function () {
@@ -96,14 +96,8 @@ describe('Vector3', function () {
     assert.deepEqual([vector1.x, vector1.y, vector1.z], [16, 54, 128], 'multiply works.');
   });
   it('applyMatrix3, applyMatrix4, applyProjection', function () {
-    // Testing applyMatrix3
-    // Using Matrix4 to simulate matrix3
-    const matrix3 = new Matrix4();
     const vector = new Vector3(1, 1, 1);
 
-    matrix3.elements = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    vector.applyMatrix3(matrix3);
-    assert.deepEqual([vector.x, vector.y, vector.z], [12, 15, 18], 'applyMatrix3 works.');
     // Testing applyMatrix4
     const matrix4 = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
@@ -296,7 +290,7 @@ describe('Vector3', function () {
     // Testing setFromMatrixColumn
     vector.setFromMatrixColumn(100, matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
-      [undefined, undefined, undefined], 'setFromMatrixScale fails as expected.');
+      [undefined!, undefined!, undefined!], 'setFromMatrixScale fails as expected.');
     vector.setFromMatrixColumn(3, matrix);
     assert.deepEqual([vector.x, vector.y, vector.z],
       [4, 8, 12], 'setFromMatrixScale works.');

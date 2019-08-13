@@ -1,0 +1,3 @@
+- add tsconfig.json (with strict on)
+- convert all js files to ts
+- remove applyMatrix3 from Vector3
