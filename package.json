@@ -1,6 +1,6 @@
 {
   "name": "cornerstone-math",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Math and computation geometry functionality for cornerstone",
   "main": "./dist/cornerstoneMath.min.js",
   "keywords": [
@@ -33,9 +33,6 @@
     "prepublishOnly": "yarn run build",
     "fs-extra": "^5.0.0",
     "test": "npm run test:chrome",
-    "test:chrome-ts": "karma start config/karma/karma-chrome-ts.js --log-level debug",
-    "test:ts-karma": "karma start config/karma/karma-ts.js",
-    "test:ts": "mocha -r ts-node/register test/**/*_test.ts",
     "test:watch": "karma start config/karma/karma-watch.js",
     "test:chrome": "karma start config/karma/karma-chrome.js",
     "test:firefox": "karma start config/karma/karma-firefox.js",
@@ -44,9 +41,7 @@
     "start": "npm run webpack",
     "start:dev": "webpack-dev-server --config ./config/webpack/webpack-dev",
     "watch": "npm run webpack:watch",
-    "webpack": "npm run clean:dist && npm run webpack:ts",
-    "webpack:ts": "webpack --progress --config ./config/webpack/webpack-ts",
-    "webpack:origin": "npm run clean:dist && npm run webpack:prod && npm run webpack:dev",
+    "webpack": "npm run clean:dist && npm run webpack:prod && npm run webpack:dev",
     "webpack:dev": "webpack --progress --config ./config/webpack/webpack-dev",
     "webpack:prod": "webpack --progress --config ./config/webpack/webpack-prod",
     "webpack:watch": "webpack --progress --debug --watch  --config ./config/webpack"
@@ -86,8 +81,8 @@
     "typescript": "^3.5.3",
     "typescript-eslint-parser": "^22.0.0",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.1.4",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
     "webpack-dev-server": "^3.1.4"
   }
 }
