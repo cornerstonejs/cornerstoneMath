@@ -1,7 +1,7 @@
-import Vector3 from "./vector3";
-import { clamp } from "./math";
-import Matrix4 from "./matrix4";
-import { INumber3 } from "./Interfaces";
+import Vector3 from './vector3';
+import { clamp } from './math';
+import Matrix4 from './matrix4';
+import { INumber3 } from './Interfaces';
 
 // Copied from THREE.JS
 /**
@@ -14,50 +14,50 @@ class Line3 {
 
   constructor();
   constructor(start: Vector3, end: Vector3);
-  constructor(start?: Vector3, end?: Vector3) {
+  constructor (start?: Vector3, end?: Vector3) {
     this.start = start || new Vector3();
     this.end = end || new Vector3();
   }
 
-  set(start: Vector3, end: Vector3) {
+  set (start: Vector3, end: Vector3) {
     this.start.copy(start);
     this.end.copy(end);
 
     return this;
   }
 
-  copy(line: Line3) {
+  copy (line: Line3) {
     this.start.copy(line.start);
     this.end.copy(line.end);
 
     return this;
   }
 
-  center(optionalTarget: Vector3 = new Vector3()) {
+  center (optionalTarget: Vector3 = new Vector3()) {
     return optionalTarget.addVectors(this.start, this.end).multiplyScalar(0.5);
   }
 
-  delta(optionalTarget: Vector3) {
+  delta (optionalTarget: Vector3) {
     return optionalTarget.subVectors(this.end, this.start);
   }
 
-  distanceSq() {
+  distanceSq () {
     return this.start.distanceToSquared(this.end);
   }
 
-  distance() {
+  distance () {
     return this.start.distanceTo(this.end);
   }
 
-  at(t: number, optionalTarget: Vector3 = new Vector3()) {
+  at (t: number, optionalTarget: Vector3 = new Vector3()) {
     const result = optionalTarget;
 
-    return this.delta(result)
-      .multiplyScalar(t)
-      .add(this.start);
+    return this.delta(result).
+      multiplyScalar(t).
+      add(this.start);
   }
 
-  closestPointToPointParameter(point: INumber3, clampToLine: boolean = false) {
+  closestPointToPointParameter (point: INumber3, clampToLine: boolean = false) {
     const startP = new Vector3();
     const startEnd = new Vector3();
 
@@ -76,33 +76,35 @@ class Line3 {
     return t;
   }
 
-  closestPointToPoint(
+  closestPointToPoint (
     point: INumber3,
     clampToLine: boolean = false,
     optionalTarget: Vector3 = new Vector3()
   ) {
     const t = this.closestPointToPointParameter(point, clampToLine);
-    return this.delta(optionalTarget)
-      .multiplyScalar(t)
-      .add(this.start);
+
+
+    return this.delta(optionalTarget).
+      multiplyScalar(t).
+      add(this.start);
   }
 
-  applyMatrix4(matrix: Matrix4) {
+  applyMatrix4 (matrix: Matrix4) {
     this.start.applyMatrix4(matrix);
     this.end.applyMatrix4(matrix);
 
     return this;
   }
 
-  equals(line: Line3) {
+  equals (line: Line3) {
     return line.start.equals(this.start) && line.end.equals(this.end);
   }
 
-  clone() {
+  clone () {
     return new Line3().copy(this);
   }
 
-  intersectLine(line: Line3) {
+  intersectLine (line: Line3) {
     // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
     const da = this.end.clone().sub(this.start);
     const db = line.end.clone().sub(line.start);
@@ -124,15 +126,8 @@ class Line3 {
     }
 
     const intersection = this.start.clone().add(da.clone().multiplyScalar(s));
-    const distanceTest =
-      intersection
-        .clone()
-        .sub(line.start)
-        .lengthSq() +
-      intersection
-        .clone()
-        .sub(line.end)
-        .lengthSq();
+    const distanceTest = intersection.clone().sub(line.start).lengthSq() +
+      intersection.clone().sub(line.end).lengthSq();
 
     if (distanceTest <= line.distanceSq()) {
       return intersection;

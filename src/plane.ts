@@ -1,6 +1,6 @@
-import Vector3 from "./vector3";
-import Line3 from "./Line3";
-import { INumber3 } from "./Interfaces";
+import Vector3 from './vector3';
+import Line3 from './Line3';
+import { INumber3 } from './Interfaces';
 
 // Copied from Three.JS
 /**
@@ -11,26 +11,26 @@ class Plane {
   normal: Vector3;
   constant: number;
 
-  constructor(obj?: { normal: Vector3; constant: number }) {
+  constructor (obj?: { normal: Vector3; constant: number }) {
     this.normal = obj ? obj.normal : new Vector3(1, 0, 0);
     this.constant = obj ? obj.constant : 0;
   }
 
-  set(normal: Vector3, constant: number) {
+  set (normal: Vector3, constant: number) {
     this.normal.copy(normal);
     this.constant = constant;
 
     return this;
   }
 
-  setComponents(x: number, y: number, z: number, w: number) {
+  setComponents (x: number, y: number, z: number, w: number) {
     this.normal.set(x, y, z);
     this.constant = w;
 
     return this;
   }
 
-  setFromNormalAndCoplanarPoint(normal: INumber3, point: INumber3) {
+  setFromNormalAndCoplanarPoint (normal: INumber3, point: INumber3) {
     this.normal.copy(normal);
     // Must be this.normal, not normal, as this.normal is normalized
     this.constant = -this.normal.dot(point);
@@ -38,14 +38,14 @@ class Plane {
     return this;
   }
 
-  copy(plane: Plane) {
+  copy (plane: Plane) {
     this.normal.copy(plane.normal);
     this.constant = plane.constant;
 
     return this;
   }
 
-  normalize() {
+  normalize () {
     // Note: will lead to a divide by zero if the plane is invalid.
 
     const inverseNormalLength = 1.0 / this.normal.length();
@@ -56,35 +56,37 @@ class Plane {
     return this;
   }
 
-  negate() {
+  negate () {
     this.constant *= -1;
     this.normal.negate();
 
     return this;
   }
 
-  distanceToPoint(point: INumber3) {
+  distanceToPoint (point: INumber3) {
     return this.normal.dot(point) + this.constant;
   }
 
-  distanceToSphere(sphere: { center: INumber3; radius: number }) {
+  distanceToSphere (sphere: { center: INumber3; radius: number }) {
     return this.distanceToPoint(sphere.center) - sphere.radius;
   }
 
-  projectPoint(point: INumber3, optionalTarget: Vector3 = new Vector3()) {
-    return this.orthoPoint(point, optionalTarget)
-      .sub(point)
-      .negate();
+  projectPoint (point: INumber3, optionalTarget: Vector3 = new Vector3()) {
+    return this.orthoPoint(point, optionalTarget).
+      sub(point).
+      negate();
   }
 
-  orthoPoint(point: INumber3, optionalTarget: Vector3 = new Vector3()) {
+  orthoPoint (point: INumber3, optionalTarget: Vector3 = new Vector3()) {
     const perpendicularMagnitude = this.distanceToPoint(point);
-    return optionalTarget
-      .copy(this.normal)
-      .multiplyScalar(perpendicularMagnitude);
+
+
+    return optionalTarget.
+      copy(this.normal).
+      multiplyScalar(perpendicularMagnitude);
   }
 
-  isIntersectionLine(line: Line3) {
+  isIntersectionLine (line: Line3) {
     // Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
 
     const startSign = this.distanceToPoint(line.start);
@@ -93,7 +95,7 @@ class Plane {
     return (startSign < 0 && endSign > 0) || (endSign < 0 && startSign > 0);
   }
 
-  intersectPlane(targetPlane: Plane) {
+  intersectPlane (targetPlane: Plane) {
     // Returns the intersection line between two planes
     const direction = this.normal.clone().cross(targetPlane.normal);
     const origin = new Vector3();
@@ -104,10 +106,10 @@ class Plane {
 
     // If the planes are parallel, return an empty vector for the intersection line
     if (
-      this.normal
-        .clone()
-        .cross(targetPlane.normal)
-        .length() < 1e-10
+      this.normal.
+        clone().
+        cross(targetPlane.normal).
+        length() < 1e-10
     ) {
       intersectionData.direction = new Vector3();
 
@@ -121,44 +123,47 @@ class Plane {
     const c1 = -(h1 - h2 * n1dotn2) / (1 - n1dotn2 * n1dotn2);
     const c2 = -(h2 - h1 * n1dotn2) / (1 - n1dotn2 * n1dotn2);
 
-    intersectionData.origin = this.normal
-      .clone()
-      .multiplyScalar(c1)
-      .add(targetPlane.normal.clone().multiplyScalar(c2));
+    intersectionData.origin = this.normal.
+      clone().
+      multiplyScalar(c1).
+      add(targetPlane.normal.clone().multiplyScalar(c2));
 
     return intersectionData;
   }
 
-  coplanarPoint(optionalTarget: Vector3 = new Vector3()) {
+  coplanarPoint (optionalTarget: Vector3 = new Vector3()) {
     return optionalTarget.copy(this.normal).multiplyScalar(-this.constant);
   }
 
-  translate(offset: Vector3) {
+  translate (offset: Vector3) {
     this.constant = this.constant - offset.dot(this.normal);
+
     return this;
   }
 
-  equals(plane: Plane) {
+  equals (plane: Plane) {
     return plane.normal.equals(this.normal) && plane.constant === this.constant;
   }
 
-  clone() {
+  clone () {
     return new Plane().copy(this);
   }
 
-  setFromCoplanarPoints(a: INumber3, b: INumber3, c: INumber3) {
+  setFromCoplanarPoints (a: INumber3, b: INumber3, c: INumber3) {
     const v1 = new Vector3();
     const v2 = new Vector3();
-    const normal = v1
-      .subVectors(c, b)
-      .cross(v2.subVectors(a, b))
-      .normalize();
+    const normal = v1.
+      subVectors(c, b).
+      cross(v2.subVectors(a, b)).
+      normalize();
     // Q: should an error be thrown if normal is zero (e.g. degenerate plane)?
+
     this.setFromNormalAndCoplanarPoint(normal, a);
+
     return this;
   }
 
-  intersectLine(line: Line3, optionalTarget: Vector3 = new Vector3()) {
+  intersectLine (line: Line3, optionalTarget: Vector3 = new Vector3()) {
     const v1 = new Vector3();
 
     const direction = line.delta(v1);
@@ -181,10 +186,10 @@ class Plane {
       return undefined;
     }
 
-    return optionalTarget
-      .copy(direction)
-      .multiplyScalar(t)
-      .add(line.start);
+    return optionalTarget.
+      copy(direction).
+      multiplyScalar(t).
+      add(line.start);
   }
 }
 

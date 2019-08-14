@@ -1,5 +1,5 @@
-import Vector3 from "./vector3";
-import Quaternion from "./quaternion";
+import Vector3 from './vector3';
+import Quaternion from './quaternion';
 
 // Based on THREE.JS
 class Matrix4 {
@@ -24,7 +24,7 @@ class Matrix4 {
     n43: number,
     n44: number
   );
-  constructor(
+  constructor (
     n11?: number,
     n12?: number,
     n13?: number,
@@ -67,13 +67,14 @@ class Matrix4 {
     }
   }
 
-  identity() {
+  identity () {
     const te = this.elements;
+
     te.fill(0);
     te[0] = te[5] = te[10] = te[15] = 1;
   }
 
-  makeRotationFromQuaternion(q: Quaternion) {
+  makeRotationFromQuaternion (q: Quaternion) {
     const te = this.elements;
 
     const { x, y, z, w } = q;
@@ -116,7 +117,7 @@ class Matrix4 {
     return this;
   }
 
-  multiplyMatrices(a: Matrix4, b: Matrix4) {
+  multiplyMatrices (a: Matrix4, b: Matrix4) {
     const ae = a.elements;
     const be = b.elements;
     const te = this.elements;
@@ -178,10 +179,10 @@ class Matrix4 {
     return this;
   }
 
-  multiply(m: Matrix4, n: Matrix4) {
+  multiply (m: Matrix4, n: Matrix4) {
     if (n !== undefined) {
       console.warn(
-        "DEPRECATED: Matrix4's .multiply() now only accepts one argument. Use .multiplyMatrices( a, b ) instead."
+        'DEPRECATED: Matrix4\'s .multiply() now only accepts one argument. Use .multiplyMatrices( a, b ) instead.'
       );
 
       return this.multiplyMatrices(m, n);
@@ -190,7 +191,7 @@ class Matrix4 {
     return this.multiplyMatrices(this, m);
   }
 
-  getInverse(m: Matrix4, throwOnInvertible: boolean = false) {
+  getInverse (m: Matrix4, throwOnInvertible: boolean = false) {
     // Based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
     const te = this.elements;
     const me = m.elements;
@@ -328,7 +329,7 @@ class Matrix4 {
     const det = n11 * te[0] + n21 * te[4] + n31 * te[8] + n41 * te[12];
 
     if (det === 0) {
-      const msg = "Matrix4.getInverse(): can't invert matrix, determinant is 0";
+      const msg = 'Matrix4.getInverse(): can\'t invert matrix, determinant is 0';
 
       if (throwOnInvertible) {
         throw new Error(msg);
@@ -346,8 +347,9 @@ class Matrix4 {
     return this;
   }
 
-  applyToVector3Array(array: number[], offset?: number, length?: number) {
+  applyToVector3Array (array: number[], offset?: number, length?: number) {
     const v1 = new Vector3();
+
     if (offset === undefined) {
       offset = 0;
     }
@@ -370,13 +372,13 @@ class Matrix4 {
     return array;
   }
 
-  makeTranslation(x: number, y: number, z: number) {
+  makeTranslation (x: number, y: number, z: number) {
     this.set(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z, 0, 0, 0, 1);
 
     return this;
   }
 
-  multiplyScalar(s: number) {
+  multiplyScalar (s: number) {
     const te = this.elements;
 
     te[0] *= s;
@@ -399,7 +401,7 @@ class Matrix4 {
     return this;
   }
 
-  set(
+  set (
     n11: number,
     n12: number,
     n13: number,
@@ -439,7 +441,7 @@ class Matrix4 {
     return this;
   }
 
-  makeScale(x: number, y: number, z: number) {
+  makeScale (x: number, y: number, z: number) {
     this.set(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1);
 
     return this;

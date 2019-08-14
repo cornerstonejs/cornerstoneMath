@@ -1,17 +1,17 @@
-import { sign } from "./math";
-import Line3 from "./Line3";
-import { INumber2, ILineSegment } from "./Interfaces";
+import { sign } from './math';
+import Line3 from './Line3';
+import { INumber2, ILineSegment } from './Interfaces';
 
 // Based on  http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
-function sqr(x: number) {
+function sqr (x: number) {
   return x * x;
 }
 
-function dist2(v: INumber2, w: INumber2) {
+function dist2 (v: INumber2, w: INumber2) {
   return sqr(v.x - w.x) + sqr(v.y - w.y);
 }
 
-function distanceToPointSquared(lineSegment: ILineSegment, point: INumber2) {
+function distanceToPointSquared (lineSegment: ILineSegment, point: INumber2) {
   const l2 = dist2(lineSegment.start, lineSegment.end);
 
   if (l2 === 0) {
@@ -39,12 +39,12 @@ function distanceToPointSquared(lineSegment: ILineSegment, point: INumber2) {
   return dist2(point, pt);
 }
 
-function distanceToPoint(lineSegment: ILineSegment, point: INumber2) {
+function distanceToPoint (lineSegment: ILineSegment, point: INumber2) {
   return Math.sqrt(distanceToPointSquared(lineSegment, point));
 }
 
 // Returns intersection points of two lines
-function intersectLine(lineSegment1: Line3, lineSegment2: Line3) {
+function intersectLine (lineSegment1: Line3, lineSegment2: Line3) {
   let x1 = lineSegment1.start.x,
     y1 = lineSegment1.start.y,
     x2 = lineSegment1.end.x,
@@ -113,7 +113,8 @@ function intersectLine(lineSegment1: Line3, lineSegment2: Line3) {
   num = a2 * c1 - a1 * c2;
   const y = num / denom;
 
-  return { x, y };
+  return { x,
+    y };
 }
 
 // Module exports

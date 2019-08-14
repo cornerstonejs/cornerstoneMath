@@ -1,7 +1,7 @@
-import lineSegment from "./lineSegment";
-import { IRect, INumber2 } from "./Interfaces";
+import lineSegment from './lineSegment';
+import { IRect, INumber2 } from './Interfaces';
 
-function rectToLineSegments(rect: IRect) {
+function rectToLineSegments (rect: IRect) {
   const top = {
     start: {
       x: rect.left,
@@ -47,11 +47,11 @@ function rectToLineSegments(rect: IRect) {
   return lineSegments;
 }
 
-function distanceToPoint(rect: IRect, point: INumber2) {
+function distanceToPoint (rect: IRect, point: INumber2) {
   let minDistance = 655535;
   const lineSegments = rectToLineSegments(rect);
 
-  lineSegments.forEach(function(segment) {
+  lineSegments.forEach(function (segment) {
     const distance = lineSegment.distanceToPoint(segment, point);
 
     if (distance < minDistance) {
@@ -63,7 +63,7 @@ function distanceToPoint(rect: IRect, point: INumber2) {
 }
 
 // Returns top-left and bottom-right points of the rectangle
-function rectToPoints(rect: IRect) {
+function rectToPoints (rect: IRect) {
   const rectPoints = {
     topLeft: {
       x: rect.left,
@@ -79,7 +79,7 @@ function rectToPoints(rect: IRect) {
 }
 
 // Returns whether two non-rotated rectangles are intersected
-function doesIntersect(rect1: IRect, rect2: IRect) {
+function doesIntersect (rect1: IRect, rect2: IRect) {
   let intersectLeftRight;
   let intersectTopBottom;
 
@@ -138,10 +138,12 @@ function doesIntersect(rect1: IRect, rect2: IRect) {
 }
 
 // Returns intersection points of two non-rotated rectangles
-function getIntersectionRect(rect1: IRect, rect2: IRect) {
+function getIntersectionRect (rect1: IRect, rect2: IRect) {
   const intersectRect = {
-    topLeft: { x: 0, y: 0 },
-    bottomRight: { x: 0, y: 0 }
+    topLeft: { x: 0,
+      y: 0 },
+    bottomRight: { x: 0,
+      y: 0 }
   };
 
   if (!doesIntersect(rect1, rect2)) {

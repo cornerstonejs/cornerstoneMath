@@ -1,5 +1,5 @@
-import Matrix4 from "./matrix4";
-import { INumber3 } from "./Interfaces";
+import Matrix4 from './matrix4';
+import { INumber3 } from './Interfaces';
 
 class Quaternion {
   x: number;
@@ -9,14 +9,14 @@ class Quaternion {
 
   constructor();
   constructor(x: number, y: number, z: number, w: number);
-  constructor(x?: number, y?: number, z?: number, w?: number) {
+  constructor (x?: number, y?: number, z?: number, w?: number) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
     this.w = w || 1;
   }
 
-  setFromAxisAngle(axis: INumber3, angle: number) {
+  setFromAxisAngle (axis: INumber3, angle: number) {
     let halfAngle = angle / 2,
       s = Math.sin(halfAngle);
 
@@ -28,7 +28,7 @@ class Quaternion {
     return this;
   }
 
-  multiplyQuaternions(a: Quaternion, b: Quaternion) {
+  multiplyQuaternions (a: Quaternion, b: Quaternion) {
     let qax = a.x,
       qay = a.y,
       qaz = a.z,
@@ -46,7 +46,7 @@ class Quaternion {
     return this;
   }
 
-  setFromRotationMatrix(m: Matrix4) {
+  setFromRotationMatrix (m: Matrix4) {
     let te = m.elements,
       m11 = te[0],
       m12 = te[4],

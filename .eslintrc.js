@@ -1,4 +1,8 @@
 module.exports = {
+  parser: 'typescript-eslint-parser',
+  plugins: [
+      'typescript'
+  ],
   'env': {
     'browser': true,
     'es6': true,
@@ -244,5 +248,15 @@ module.exports = {
     'wrap-regex': 'warn',
     'yield-star-spacing': 'warn',
     'yoda': 'warn'
-  }
+  },
+  'overrides': [
+    {
+      "files": ["**/*.ts"],
+      "rules": { 
+        'no-dupe-class-members': 'off', 
+        'no-useless-constructor': 'off',
+        "no-unused-vars": 'off'
+      }
+    }
+  ]
 };
