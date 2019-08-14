@@ -1,46 +1,23 @@
 import lineSegment from './lineSegment';
 import { IRect, INumber2 } from './Interfaces';
+import { Interval } from './interval';
 
 function rectToLineSegments (rect: IRect) {
   const top = {
-    start: {
-      x: rect.left,
-      y: rect.top
-    },
-    end: {
-      x: rect.left + rect.width,
-      y: rect.top
-    }
+    start: { x: rect.left, y: rect.top },
+    end: { x: rect.left + rect.width, y: rect.top }
   };
   const right = {
-    start: {
-      x: rect.left + rect.width,
-      y: rect.top
-    },
-    end: {
-      x: rect.left + rect.width,
-      y: rect.top + rect.height
-    }
+    start: { x: rect.left + rect.width, y: rect.top },
+    end: { x: rect.left + rect.width, y: rect.top + rect.height }
   };
   const bottom = {
-    start: {
-      x: rect.left + rect.width,
-      y: rect.top + rect.height
-    },
-    end: {
-      x: rect.left,
-      y: rect.top + rect.height
-    }
+    start: { x: rect.left + rect.width, y: rect.top + rect.height },
+    end: { x: rect.left, y: rect.top + rect.height }
   };
   const left = {
-    start: {
-      x: rect.left,
-      y: rect.top + rect.height
-    },
-    end: {
-      x: rect.left,
-      y: rect.top
-    }
+    start: { x: rect.left, y: rect.top + rect.height },
+    end: { x: rect.left, y: rect.top }
   };
   const lineSegments = [top, right, bottom, left];
 
@@ -80,161 +57,58 @@ function rectToPoints (rect: IRect) {
 
 // Returns whether two non-rotated rectangles are intersected
 function doesIntersect (rect1: IRect, rect2: IRect) {
-  let intersectLeftRight;
-  let intersectTopBottom;
+  const intervalRect1H = new Interval(
+    Math.min(rect1.left, rect1.left + rect1.width),
+    Math.max(rect1.left, rect1.left + rect1.width),
+  );
+  const intervalRect1V = new Interval(
+    Math.min(rect1.top, rect1.top + rect1.height),
+    Math.max(rect1.top, rect1.top + rect1.height),
+  );
+  const intervalRect2H = new Interval(
+    Math.min(rect2.left, rect2.left + rect2.width),
+    Math.max(rect2.left, rect2.left + rect2.width),
+  );
+  const intervalRect2V = new Interval(
+    Math.min(rect2.top, rect2.top + rect2.height),
+    Math.max(rect2.top, rect2.top + rect2.height),
+  );
 
-  const rect1Points = rectToPoints(rect1);
-  const rect2Points = rectToPoints(rect2);
-
-  if (rect1.width >= 0) {
-    if (rect2.width >= 0) {
-      intersectLeftRight = !(
-        rect1Points.bottomRight.x <= rect2Points.topLeft.x ||
-        rect2Points.bottomRight.x <= rect1Points.topLeft.x
-      );
-    } else {
-      intersectLeftRight = !(
-        rect1Points.bottomRight.x <= rect2Points.bottomRight.x ||
-        rect2Points.topLeft.x <= rect1Points.topLeft.x
-      );
-    }
-  } else if (rect2.width >= 0) {
-    intersectLeftRight = !(
-      rect1Points.topLeft.x <= rect2Points.topLeft.x ||
-      rect2Points.bottomRight.x <= rect1Points.bottomRight.x
-    );
-  } else {
-    intersectLeftRight = !(
-      rect1Points.topLeft.x <= rect2Points.bottomRight.x ||
-      rect2Points.topLeft.x <= rect1Points.bottomRight.x
-    );
-  }
-
-  if (rect1.height >= 0) {
-    if (rect2.height >= 0) {
-      intersectTopBottom = !(
-        rect1Points.bottomRight.y <= rect2Points.topLeft.y ||
-        rect2Points.bottomRight.y <= rect1Points.topLeft.y
-      );
-    } else {
-      intersectTopBottom = !(
-        rect1Points.bottomRight.y <= rect2Points.bottomRight.y ||
-        rect2Points.topLeft.y <= rect1Points.topLeft.y
-      );
-    }
-  } else if (rect2.height >= 0) {
-    intersectTopBottom = !(
-      rect1Points.topLeft.y <= rect2Points.topLeft.y ||
-      rect2Points.bottomRight.y <= rect1Points.bottomRight.y
-    );
-  } else {
-    intersectTopBottom = !(
-      rect1Points.topLeft.y <= rect2Points.bottomRight.y ||
-      rect2Points.topLeft.y <= rect1Points.bottomRight.y
-    );
-  }
-
-  return intersectLeftRight && intersectTopBottom;
+  return intervalRect1H.doesIntersect(intervalRect2H) &&
+  intervalRect1V.doesIntersect(intervalRect2V);
 }
 
 // Returns intersection points of two non-rotated rectangles
 function getIntersectionRect (rect1: IRect, rect2: IRect) {
-  const intersectRect = {
-    topLeft: { x: 0,
-      y: 0 },
-    bottomRight: { x: 0,
-      y: 0 }
-  };
+  const intervalRect1H = new Interval(
+    Math.min(rect1.left, rect1.left + rect1.width),
+    Math.max(rect1.left, rect1.left + rect1.width),
+  );
+  const intervalRect1V = new Interval(
+    Math.min(rect1.top, rect1.top + rect1.height),
+    Math.max(rect1.top, rect1.top + rect1.height),
+  );
+  const intervalRect2H = new Interval(
+    Math.min(rect2.left, rect2.left + rect2.width),
+    Math.max(rect2.left, rect2.left + rect2.width),
+  );
+  const intervalRect2V = new Interval(
+    Math.min(rect2.top, rect2.top + rect2.height),
+    Math.max(rect2.top, rect2.top + rect2.height),
+  );
 
-  if (!doesIntersect(rect1, rect2)) {
+  const intersectionH = intervalRect1H.getIntersection(intervalRect2H);
+  const intersectionV = intervalRect1V.getIntersection(intervalRect2V);
+
+  if (!intersectionH || !intersectionV) {
     return;
   }
-
-  const rect1Points = rectToPoints(rect1);
-  const rect2Points = rectToPoints(rect2);
-
-  if (rect1.width >= 0) {
-    if (rect2.width >= 0) {
-      intersectRect.topLeft.x = Math.max(
-        rect1Points.topLeft.x,
-        rect2Points.topLeft.x
-      );
-      intersectRect.bottomRight.x = Math.min(
-        rect1Points.bottomRight.x,
-        rect2Points.bottomRight.x
-      );
-    } else {
-      intersectRect.topLeft.x = Math.max(
-        rect1Points.topLeft.x,
-        rect2Points.bottomRight.x
-      );
-      intersectRect.bottomRight.x = Math.min(
-        rect1Points.bottomRight.x,
-        rect2Points.topLeft.x
-      );
-    }
-  } else if (rect2.width >= 0) {
-    intersectRect.topLeft.x = Math.min(
-      rect1Points.topLeft.x,
-      rect2Points.bottomRight.x
-    );
-    intersectRect.bottomRight.x = Math.max(
-      rect1Points.bottomRight.x,
-      rect2Points.topLeft.x
-    );
-  } else {
-    intersectRect.topLeft.x = Math.min(
-      rect1Points.topLeft.x,
-      rect2Points.topLeft.x
-    );
-    intersectRect.bottomRight.x = Math.max(
-      rect1Points.bottomRight.x,
-      rect2Points.bottomRight.x
-    );
-  }
-
-  if (rect1.height >= 0) {
-    if (rect2.height >= 0) {
-      intersectRect.topLeft.y = Math.max(
-        rect1Points.topLeft.y,
-        rect2Points.topLeft.y
-      );
-      intersectRect.bottomRight.y = Math.min(
-        rect1Points.bottomRight.y,
-        rect2Points.bottomRight.y
-      );
-    } else {
-      intersectRect.topLeft.y = Math.max(
-        rect1Points.topLeft.y,
-        rect2Points.bottomRight.y
-      );
-      intersectRect.bottomRight.y = Math.min(
-        rect1Points.bottomRight.y,
-        rect2Points.topLeft.y
-      );
-    }
-  } else if (rect2.height >= 0) {
-    intersectRect.topLeft.y = Math.min(
-      rect1Points.topLeft.y,
-      rect2Points.bottomRight.y
-    );
-    intersectRect.bottomRight.y = Math.max(
-      rect1Points.bottomRight.y,
-      rect2Points.topLeft.y
-    );
-  } else {
-    intersectRect.topLeft.y = Math.min(
-      rect1Points.topLeft.y,
-      rect2Points.topLeft.y
-    );
-    intersectRect.bottomRight.y = Math.max(
-      rect1Points.bottomRight.y,
-      rect2Points.bottomRight.y
-    );
-  }
-
   // Returns top-left and bottom-right points of intersected rectangle
-  return intersectRect;
+
+  return {
+    topLeft: { x: intersectionH.min, y: intersectionV.min },
+    bottomRight: { x: intersectionH.max, y: intersectionV.max }
+  };
 }
 
 const rect = {

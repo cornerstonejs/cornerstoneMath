@@ -252,7 +252,8 @@ module.exports = {
   'overrides': [
     {
       "files": ["**/*.ts"],
-      "rules": { 
+      "rules": {
+        'object-property-newline': 'off',
         'no-dupe-class-members': 'off', 
         'no-useless-constructor': 'off',
         "no-unused-vars": 'off'
