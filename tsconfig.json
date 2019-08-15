@@ -19,5 +19,10 @@
   "exclude": [
     "test/**/*_test.ts",
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "mode": "file",
+    "include": "./src",
+    "out": "documentation/"
+  }
 }
