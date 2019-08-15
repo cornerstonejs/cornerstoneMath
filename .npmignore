@@ -7,6 +7,5 @@ test/
 .babelrc
 .eslintignore
 .gitignore
-.jsdocrc
 .travis.yml
 karma.conf.js

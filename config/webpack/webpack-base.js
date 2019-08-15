@@ -24,7 +24,7 @@ module.exports = {
   },
   resolve: {
     // Add '.ts' as resolvable extensions.
-    extensions: ['.ts'],
+    extensions: ['.ts', '.js'],
     modules: ['./src', 'node_modules']
   },
   // A SourceMap is added as a DataUrl to the bundle.
@@ -36,7 +36,7 @@ module.exports = {
       { 
         test: /\.ts$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules(?!\/webpack-dev-server)/
       }
     ]
     // rules: [{
