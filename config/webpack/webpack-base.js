@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   context: context,
   entry: {
-    cornerstoneMath: './index.js'
+    cornerstoneMath: './index.ts'
   },
   target: 'web',
   output: {
@@ -22,18 +22,25 @@ module.exports = {
     path: outputPath,
     umdNamedDefine: true
   },
-  devtool: 'source-map',
+  resolve: {
+    // Add '.ts' as resolvable extensions.
+    extensions: ['.ts', '.js'],
+    modules: ['./src', 'node_modules']
+  },
+  // A SourceMap is added as a DataUrl to the bundle.
+  devtool: '#inline-source-map',
+  // devtool: 'source-map',
   module: {
     rules: [{
       enforce: 'pre',
-      test: /\.js$/,
+      test: /\.ts$/,
       exclude: /(node_modules)/,
       loader: 'eslint-loader',
       options: {
-        failOnError: false
+        failOnError: false,
       }
     }, {
-      test: /\.js$/,
+      test: /\.ts$/,
       exclude: /(node_modules)/,
       use: [{
         loader: 'babel-loader'

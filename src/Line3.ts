@@ -1,78 +1,63 @@
-import Vector3 from './vector3.js';
-import { clamp } from './math.js';
+import Vector3 from './vector3';
+import { clamp } from './math';
+import Matrix4 from './matrix4';
+import { Number3 } from './Interfaces';
 
 // Copied from THREE.JS
 /**
  * @author bhouston / http://exocortex.com
  */
 
-
 class Line3 {
-  constructor (start, end) {
+  start: Vector3;
+  end: Vector3;
 
-    this.start = (start !== undefined) ? start : new Vector3();
-    this.end = (end !== undefined) ? end : new Vector3();
-
+  constructor();
+  constructor(start: Vector3, end: Vector3);
+  constructor (start?: Vector3, end?: Vector3) {
+    this.start = start || new Vector3();
+    this.end = end || new Vector3();
   }
 
-  set (start, end) {
-
+  set (start: Vector3, end: Vector3): this {
     this.start.copy(start);
     this.end.copy(end);
 
     return this;
-
   }
 
-  copy (line) {
-
+  copy (line: Line3): this {
     this.start.copy(line.start);
     this.end.copy(line.end);
 
     return this;
-
   }
 
-  center (optionalTarget) {
-
-    const result = optionalTarget || new Vector3();
-
-
-    return result.addVectors(this.start, this.end).multiplyScalar(0.5);
-
+  center (optionalTarget: Vector3 = new Vector3()): Vector3 {
+    return optionalTarget.addVectors(this.start, this.end).multiplyScalar(0.5);
   }
 
-  delta (optionalTarget) {
-
-    const result = optionalTarget || new Vector3();
-
-
-    return result.subVectors(this.end, this.start);
-
+  delta (optionalTarget: Vector3): Vector3 {
+    return optionalTarget.subVectors(this.end, this.start);
   }
 
-  distanceSq () {
-
+  distanceSq (): number {
     return this.start.distanceToSquared(this.end);
-
   }
 
-  distance () {
-
+  distance (): number {
     return this.start.distanceTo(this.end);
-
   }
 
-  at (t, optionalTarget) {
+  at (t: number, optionalTarget: Vector3 = new Vector3()): Vector3 {
+    const result = optionalTarget;
 
-    const result = optionalTarget || new Vector3();
-
-    return this.delta(result).multiplyScalar(t).add(this.start);
-
+    return this.delta(result).
+      multiplyScalar(t).
+      add(this.start);
   }
 
-  closestPointToPointParameter (point, clampToLine) {
-
+  closestPointToPointParameter (point: Number3, clampToLine = false): number {
     const startP = new Vector3();
     const startEnd = new Vector3();
 
@@ -80,50 +65,46 @@ class Line3 {
     startEnd.subVectors(this.end, this.start);
 
     const startEnd2 = startEnd.dot(startEnd);
-    const startEnd_startP = startEnd.dot(startP);
+    const startEnd2StartP = startEnd.dot(startP);
 
-    let t = startEnd_startP / startEnd2;
+    let t = startEnd2StartP / startEnd2;
 
     if (clampToLine) {
       t = clamp(t, 0, 1);
     }
 
     return t;
-
   }
 
-  closestPointToPoint (point, clampToLine, optionalTarget) {
-
+  closestPointToPoint (
+    point: Number3,
+    clampToLine = false,
+    optionalTarget: Vector3 = new Vector3()
+  ): Vector3 {
     const t = this.closestPointToPointParameter(point, clampToLine);
 
-    const result = optionalTarget || new Vector3();
 
-    return this.delta(result).multiplyScalar(t).add(this.start);
-
+    return this.delta(optionalTarget).
+      multiplyScalar(t).
+      add(this.start);
   }
 
-  applyMatrix4 (matrix) {
-
+  applyMatrix4 (matrix: Matrix4): this {
     this.start.applyMatrix4(matrix);
     this.end.applyMatrix4(matrix);
 
     return this;
-
   }
 
-  equals (line) {
-
+  equals (line: Line3): boolean {
     return line.start.equals(this.start) && line.end.equals(this.end);
-
   }
 
-  clone () {
-
+  clone (): Line3 {
     return new Line3().copy(this);
-
   }
 
-  intersectLine (line) {
+  intersectLine (line: Line3): Vector3 | undefined {
     // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
     const da = this.end.clone().sub(this.start);
     const db = line.end.clone().sub(line.start);
@@ -145,7 +126,8 @@ class Line3 {
     }
 
     const intersection = this.start.clone().add(da.clone().multiplyScalar(s));
-    const distanceTest = intersection.clone().sub(line.start).lengthSq() + intersection.clone().sub(line.end).lengthSq();
+    const distanceTest = intersection.clone().sub(line.start).lengthSq() +
+      intersection.clone().sub(line.end).lengthSq();
 
     if (distanceTest <= line.distanceSq()) {
       return intersection;

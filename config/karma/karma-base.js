@@ -20,24 +20,38 @@ webpackConfig.module.rules.push({
 
 module.exports = {
   basePath: '../../',
-  frameworks: ['mocha'],
-  reporters: ['progress', 'coverage'],
+  frameworks: ['mocha', 'karma-typescript'],
+  reporters: ['karma-typescript', 'progress', 'coverage'],
   files: [
-    'test/*_test.js',
-    'test/**/*_test.js'
+    'src/**/*.ts',
+    'test/**/*_test.ts'
   ],
 
-  plugins: [
-    'karma-webpack',
-    'karma-mocha',
-    'karma-chrome-launcher',
-    'karma-firefox-launcher',
-    'karma-coverage'
-  ],
+  // karma typescript configuration 
+  karmaTypescriptConfig: {
+    // tsconfig: "../../tsconfig.json",
+    bundlerOptions: {
+        // set *.spec.ts files as entrypoints 
+        // for correct code coverage
+        entrypoints: /_test\.ts$/
+    },
+    coverageOptions: {
+        // exclude the index.ts and *.spec.ts files
+        // for correct code coverage
+        exclude: [/index\.ts$/, /_test\.ts$/]
+    },
+    reports: {
+        html: "coverage",
+        text: ""
+    },
+    compilerOptions: {
+        baseUrl: ".",
+    }
+  },
 
   preprocessors: {
-    'src/**/*.js': ['webpack'],
-    'test/**/*_test.js': ['webpack']
+    'src/**/*.ts': ['karma-typescript'],
+    'test/**/*_test.ts': ['karma-typescript']
   },
 
   webpack: webpackConfig,

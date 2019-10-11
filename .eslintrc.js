@@ -1,4 +1,8 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
+  plugins: [
+      '@typescript-eslint'
+  ],
   'env': {
     'browser': true,
     'es6': true,
@@ -6,9 +10,13 @@ module.exports = {
     'node': true,
     'mocha': true
   },
-  'extends': 'eslint:recommended',
+  'extends': [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
   'parserOptions': {
-    'sourceType': 'module'
+    'sourceType': 'module',
+    'project': './tsconfig.json'
   },
   'globals': {},
   'rules': {
@@ -244,5 +252,16 @@ module.exports = {
     'wrap-regex': 'warn',
     'yield-star-spacing': 'warn',
     'yoda': 'warn'
-  }
+  },
+  'overrides': [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        'object-property-newline': 'off',
+        'no-dupe-class-members': 'off', 
+        'no-useless-constructor': 'off',
+        "no-unused-vars": 'off'
+      }
+    }
+  ]
 };
