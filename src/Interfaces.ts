@@ -1,29 +1,29 @@
-export interface INumber2 {
+export interface Number2 {
   x: number;
   y: number;
 }
 
-export interface INumber3 {
+export interface Number3 {
   x: number;
   y: number;
   z: number;
 }
 
-export interface INumber4 {
+export interface Number4 {
   x: number;
   y: number;
   z: number;
   w: number;
 }
 
-export interface IRect {
+export interface Rect {
   left: number;
   top: number;
   width: number;
   height: number;
 }
 
-export interface ILineSegment {
-  start: INumber2;
-  end: INumber2;
+export interface LineSegment {
+  start: Number2;
+  end: Number2;
 }

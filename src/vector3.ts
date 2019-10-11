@@ -1,10 +1,10 @@
 import Quaternion from './quaternion';
 import { clamp } from './math';
 import Matrix4 from './matrix4';
-import { INumber3 } from './Interfaces';
+import { Number3 } from './Interfaces';
 
 // Based on THREE.JS
-class Vector3 implements INumber3 {
+class Vector3 implements Number3 {
   x: number;
   y: number;
   z: number;
@@ -17,7 +17,7 @@ class Vector3 implements INumber3 {
     this.z = z || 0;
   }
 
-  set (x: number, y: number, z: number) {
+  set (x: number, y: number, z: number): this {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -25,25 +25,25 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  setX (x: number) {
+  setX (x: number): this {
     this.x = x;
 
     return this;
   }
 
-  setY (y: number) {
+  setY (y: number): this {
     this.y = y;
 
     return this;
   }
 
-  setZ (z: number) {
+  setZ (z: number): this {
     this.z = z;
 
     return this;
   }
 
-  setComponent (index: number, value: number) {
+  setComponent (index: number, value: number): void {
     switch (index) {
     case 0:
       this.x = value;
@@ -59,7 +59,7 @@ class Vector3 implements INumber3 {
     }
   }
 
-  getComponent (index: number) {
+  getComponent (index: number): number {
     switch (index) {
     case 0:
       return this.x;
@@ -72,7 +72,7 @@ class Vector3 implements INumber3 {
     }
   }
 
-  copy (v: INumber3) {
+  copy (v: Number3): this {
     this.x = v.x;
     this.y = v.y;
     this.z = v.z;
@@ -80,7 +80,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  add (v: INumber3, w?: INumber3) {
+  add (v: Number3, w?: Number3): this {
     if (w !== undefined) {
       console.warn(
         'DEPRECATED: Vector3\'s .add() now only accepts one argument. Use .addVectors( a, b ) instead.'
@@ -95,7 +95,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  addScalar (s: number) {
+  addScalar (s: number): this {
     this.x += s;
     this.y += s;
     this.z += s;
@@ -103,7 +103,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  addVectors (a: INumber3, b: INumber3) {
+  addVectors (a: Number3, b: Number3): this {
     this.x = a.x + b.x;
     this.y = a.y + b.y;
     this.z = a.z + b.z;
@@ -111,7 +111,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  sub (v: INumber3, w?: INumber3) {
+  sub (v: Number3, w?: Number3): this {
     if (w !== undefined) {
       console.warn(
         'DEPRECATED: Vector3\'s .sub() now only accepts one argument. Use .subVectors( a, b ) instead.'
@@ -126,7 +126,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  subVectors (a: INumber3, b: INumber3) {
+  subVectors (a: Number3, b: Number3): this {
     this.x = a.x - b.x;
     this.y = a.y - b.y;
     this.z = a.z - b.z;
@@ -134,7 +134,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  multiply (v: INumber3, w?: INumber3) {
+  multiply (v: Number3, w?: Number3): this {
     if (w !== undefined) {
       console.warn(
         'DEPRECATED: Vector3\'s .multiply() now only accepts one argument. Use .multiplyVectors( a, b ) instead.'
@@ -149,7 +149,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  multiplyScalar (scalar: number) {
+  multiplyScalar (scalar: number): this {
     this.x *= scalar;
     this.y *= scalar;
     this.z *= scalar;
@@ -157,7 +157,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  multiplyVectors (a: INumber3, b: INumber3) {
+  multiplyVectors (a: Number3, b: Number3): this {
     this.x = a.x * b.x;
     this.y = a.y * b.y;
     this.z = a.z * b.z;
@@ -165,8 +165,8 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  applyMatrix4 (m: Matrix4) {
-    let x = this.x,
+  applyMatrix4 (m: Matrix4): this {
+    const x = this.x,
       y = this.y,
       z = this.z;
 
@@ -179,8 +179,8 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  applyProjection (m: Matrix4) {
-    let x = this.x,
+  applyProjection (m: Matrix4): this {
+    const x = this.x,
       y = this.y,
       z = this.z;
 
@@ -194,7 +194,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  applyQuaternion (q: Quaternion) {
+  applyQuaternion (q: Quaternion): this {
     const x = this.x;
     const y = this.y;
     const z = this.z;
@@ -220,11 +220,11 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  transformDirection (m: Matrix4) {
+  transformDirection (m: Matrix4): this {
     // Input: THREE.Matrix4 affine matrix
     // Vector interpreted as a direction
 
-    let x = this.x,
+    const x = this.x,
       y = this.y,
       z = this.z;
 
@@ -239,7 +239,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  divide (v: INumber3) {
+  divide (v: Number3): this {
     this.x /= v.x;
     this.y /= v.y;
     this.z /= v.z;
@@ -247,7 +247,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  divideScalar (scalar: number) {
+  divideScalar (scalar: number): this {
     if (scalar !== 0) {
       const invScalar = 1 / scalar;
 
@@ -263,7 +263,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  min (v: INumber3) {
+  min (v: Number3): this {
     if (this.x > v.x) {
       this.x = v.x;
     }
@@ -277,7 +277,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  max (v: INumber3) {
+  max (v: Number3): this {
     if (this.x < v.x) {
       this.x = v.x;
     }
@@ -293,7 +293,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  clamp (a: INumber3, b: INumber3) {
+  clamp (a: Number3, b: Number3): this {
     this.x = clamp(this.x, Math.min(a.x, b.x), Math.max(a.x, b.x));
     this.y = clamp(this.y, Math.min(a.y, b.y), Math.max(a.y, b.y));
     this.z = clamp(this.z, Math.min(a.z, b.z), Math.max(a.z, b.z));
@@ -301,7 +301,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  floor () {
+  floor (): this {
     this.x = Math.floor(this.x);
     this.y = Math.floor(this.y);
     this.z = Math.floor(this.z);
@@ -309,7 +309,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  ceil () {
+  ceil (): this {
     this.x = Math.ceil(this.x);
     this.y = Math.ceil(this.y);
     this.z = Math.ceil(this.z);
@@ -317,7 +317,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  round () {
+  round (): this {
     this.x = Math.round(this.x);
     this.y = Math.round(this.y);
     this.z = Math.round(this.z);
@@ -325,7 +325,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  roundToZero () {
+  roundToZero (): this {
     this.x = this.x < 0 ? Math.ceil(this.x) : Math.floor(this.x);
     this.y = this.y < 0 ? Math.ceil(this.y) : Math.floor(this.y);
     this.z = this.z < 0 ? Math.ceil(this.z) : Math.floor(this.z);
@@ -333,31 +333,31 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  negate () {
+  negate (): this {
     return this.multiplyScalar(-1);
   }
 
-  dot (v: INumber3) {
+  dot (v: Number3): number {
     return this.x * v.x + this.y * v.y + this.z * v.z;
   }
 
-  lengthSq () {
+  lengthSq (): number {
     return this.x * this.x + this.y * this.y + this.z * this.z;
   }
 
-  length () {
+  length (): number {
     return Math.sqrt(this.lengthSq());
   }
 
-  lengthManhattan () {
+  lengthManhattan (): number {
     return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);
   }
 
-  normalize () {
+  normalize (): this {
     return this.divideScalar(this.length());
   }
 
-  setLength (l: number) {
+  setLength (l: number): this {
     const oldLength = this.length();
 
     if (oldLength !== 0 && l !== oldLength) {
@@ -367,7 +367,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  lerp (v: INumber3, alpha: number) {
+  lerp (v: Number3, alpha: number): this {
     this.x += (v.x - this.x) * alpha;
     this.y += (v.y - this.y) * alpha;
     this.z += (v.z - this.z) * alpha;
@@ -375,7 +375,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  cross (v: INumber3, w?: INumber3) {
+  cross (v: Number3, w?: Number3): this {
     if (w !== undefined) {
       console.warn(
         'DEPRECATED: Vector3\'s .cross() now only accepts one argument. Use .crossVectors( a, b ) instead.'
@@ -384,7 +384,7 @@ class Vector3 implements INumber3 {
       return this.crossVectors(v, w);
     }
 
-    let x = this.x,
+    const x = this.x,
       y = this.y,
       z = this.z;
 
@@ -395,11 +395,11 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  crossVectors (a: INumber3, b: INumber3) {
-    let ax = a.x,
+  crossVectors (a: Number3, b: Number3): this {
+    const ax = a.x,
       ay = a.y,
       az = a.z;
-    let bx = b.x,
+    const bx = b.x,
       by = b.y,
       bz = b.z;
 
@@ -410,7 +410,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  angleTo (v: Vector3) {
+  angleTo (v: Vector3): number {
     const theta = this.dot(v) / (this.length() * v.length());
 
     // Clamp, to handle numerical problems
@@ -418,11 +418,11 @@ class Vector3 implements INumber3 {
     return Math.acos(clamp(theta, -1, 1));
   }
 
-  distanceTo (v: Vector3) {
+  distanceTo (v: Vector3): number {
     return Math.sqrt(this.distanceToSquared(v));
   }
 
-  distanceToSquared (v: INumber3) {
+  distanceToSquared (v: Number3): number {
     const dx = this.x - v.x;
     const dy = this.y - v.y;
     const dz = this.z - v.z;
@@ -430,7 +430,7 @@ class Vector3 implements INumber3 {
     return dx * dx + dy * dy + dz * dz;
   }
 
-  setFromMatrixPosition (m: Matrix4) {
+  setFromMatrixPosition (m: Matrix4): this {
     this.x = m.elements[12];
     this.y = m.elements[13];
     this.z = m.elements[14];
@@ -438,7 +438,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  setFromMatrixScale (m: Matrix4) {
+  setFromMatrixScale (m: Matrix4): this {
     const sx = this.set(m.elements[0], m.elements[1], m.elements[2]).length();
     const sy = this.set(m.elements[4], m.elements[5], m.elements[6]).length();
     const sz = this.set(m.elements[8], m.elements[9], m.elements[10]).length();
@@ -450,7 +450,7 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  setFromMatrixColumn (index: number, matrix: Matrix4) {
+  setFromMatrixColumn (index: number, matrix: Matrix4): this {
     const offset = index * 4;
 
     const me = matrix.elements;
@@ -462,11 +462,11 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  equals (v: INumber3) {
+  equals (v: Number3): boolean {
     return v.x === this.x && v.y === this.y && v.z === this.z;
   }
 
-  fromArray (array: number[]) {
+  fromArray (array: number[]): this {
     this.x = array[0];
     this.y = array[1];
     this.z = array[2];
@@ -474,15 +474,15 @@ class Vector3 implements INumber3 {
     return this;
   }
 
-  toArray () {
+  toArray (): number[] {
     return [this.x, this.y, this.z];
   }
 
-  clone () {
+  clone (): Vector3 {
     return new Vector3(this.x, this.y, this.z);
   }
 
-  projectOnVector (vector: Vector3) {
+  projectOnVector (vector: Vector3): this {
     const v1 = new Vector3();
 
     v1.copy(vector).normalize();
@@ -492,7 +492,7 @@ class Vector3 implements INumber3 {
     return this.copy(v1).multiplyScalar(dot);
   }
 
-  projectOnPlane (planeNormal: Vector3) {
+  projectOnPlane (planeNormal: Vector3): this {
     const v1 = new Vector3();
 
     v1.copy(this).projectOnVector(planeNormal);
@@ -502,14 +502,13 @@ class Vector3 implements INumber3 {
 
   // Reflect incident vector off plane orthogonal to normal
   // Normal is assumed to have unit length
-  reflect (normal: Vector3) {
+  reflect (normal: Vector3): this {
     const v1 = new Vector3();
-
 
     return this.sub(v1.copy(normal).multiplyScalar(2 * this.dot(normal)));
   }
 
-  clampScalar (minVal: number, maxVal: number) {
+  clampScalar (minVal: number, maxVal: number): this {
     const min = new Vector3();
     const max = new Vector3();
 
@@ -519,7 +518,7 @@ class Vector3 implements INumber3 {
     return this.clamp(min, max);
   }
 
-  applyAxisAngle (axis: Vector3, angle: number) {
+  applyAxisAngle (axis: Vector3, angle: number): this {
     const quaternion = new Quaternion();
 
     this.applyQuaternion(quaternion.setFromAxisAngle(axis.normalize(), angle));

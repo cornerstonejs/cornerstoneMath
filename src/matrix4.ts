@@ -19,51 +19,54 @@ class Matrix4 {
     n41?: number, n42?: number, n43?: number, n44?: number
   ) {
     this.elements = new Float32Array(16);
-    if (n11 === undefined) {
+    if (n11 === undefined || n12 === undefined || n13 === undefined || n14 === undefined ||
+      n21 === undefined || n22 === undefined || n23 === undefined || n24 === undefined ||
+      n31 === undefined || n32 === undefined || n33 === undefined || n34 === undefined ||
+      n41 === undefined || n42 === undefined || n43 === undefined || n44 === undefined) {
       this.identity();
     } else {
       const te = this.elements;
 
       te[0] = n11;
-      te[4] = n12!;
-      te[8] = n13!;
-      te[12] = n14!;
-      te[1] = n21!;
-      te[5] = n22!;
-      te[9] = n23!;
-      te[13] = n24!;
-      te[2] = n31!;
-      te[6] = n32!;
-      te[10] = n33!;
-      te[14] = n34!;
-      te[3] = n41!;
-      te[7] = n42!;
-      te[11] = n43!;
-      te[15] = n44!;
+      te[4] = n12;
+      te[8] = n13;
+      te[12] = n14;
+      te[1] = n21;
+      te[5] = n22;
+      te[9] = n23;
+      te[13] = n24;
+      te[2] = n31;
+      te[6] = n32;
+      te[10] = n33;
+      te[14] = n34;
+      te[3] = n41;
+      te[7] = n42;
+      te[11] = n43;
+      te[15] = n44;
     }
   }
 
-  identity () {
+  identity (): void {
     const te = this.elements;
 
     te.fill(0);
     te[0] = te[5] = te[10] = te[15] = 1;
   }
 
-  makeRotationFromQuaternion (q: Quaternion) {
+  makeRotationFromQuaternion (q: Quaternion): this {
     const te = this.elements;
 
     const { x, y, z, w } = q;
-    let x2 = x + x,
+    const x2 = x + x,
       y2 = y + y,
       z2 = z + z;
-    let xx = x * x2,
+    const xx = x * x2,
       xy = x * y2,
       xz = x * z2;
-    let yy = y * y2,
+    const yy = y * y2,
       yz = y * z2,
       zz = z * z2;
-    let wx = w * x2,
+    const wx = w * x2,
       wy = w * y2,
       wz = w * z2;
 
@@ -93,41 +96,41 @@ class Matrix4 {
     return this;
   }
 
-  multiplyMatrices (a: Matrix4, b: Matrix4) {
+  multiplyMatrices (a: Matrix4, b: Matrix4): this {
     const ae = a.elements;
     const be = b.elements;
     const te = this.elements;
 
-    let a11 = ae[0],
+    const a11 = ae[0],
       a12 = ae[4],
       a13 = ae[8],
       a14 = ae[12];
-    let a21 = ae[1],
+    const a21 = ae[1],
       a22 = ae[5],
       a23 = ae[9],
       a24 = ae[13];
-    let a31 = ae[2],
+    const a31 = ae[2],
       a32 = ae[6],
       a33 = ae[10],
       a34 = ae[14];
-    let a41 = ae[3],
+    const a41 = ae[3],
       a42 = ae[7],
       a43 = ae[11],
       a44 = ae[15];
 
-    let b11 = be[0],
+    const b11 = be[0],
       b12 = be[4],
       b13 = be[8],
       b14 = be[12];
-    let b21 = be[1],
+    const b21 = be[1],
       b22 = be[5],
       b23 = be[9],
       b24 = be[13];
-    let b31 = be[2],
+    const b31 = be[2],
       b32 = be[6],
       b33 = be[10],
       b34 = be[14];
-    let b41 = be[3],
+    const b41 = be[3],
       b42 = be[7],
       b43 = be[11],
       b44 = be[15];
@@ -155,7 +158,7 @@ class Matrix4 {
     return this;
   }
 
-  multiply (m: Matrix4, n: Matrix4) {
+  multiply (m: Matrix4, n: Matrix4): this {
     if (n !== undefined) {
       console.warn(
         'DEPRECATED: Matrix4\'s .multiply() now only accepts one argument. Use .multiplyMatrices( a, b ) instead.'
@@ -167,24 +170,24 @@ class Matrix4 {
     return this.multiplyMatrices(this, m);
   }
 
-  getInverse (m: Matrix4, throwOnInvertible: boolean = false) {
+  getInverse (m: Matrix4, throwOnInvertible = false): this {
     // Based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
     const te = this.elements;
     const me = m.elements;
 
-    let n11 = me[0],
+    const n11 = me[0],
       n12 = me[4],
       n13 = me[8],
       n14 = me[12];
-    let n21 = me[1],
+    const n21 = me[1],
       n22 = me[5],
       n23 = me[9],
       n24 = me[13];
-    let n31 = me[2],
+    const n31 = me[2],
       n32 = me[6],
       n33 = me[10],
       n34 = me[14];
-    let n41 = me[3],
+    const n41 = me[3],
       n42 = me[7],
       n43 = me[11],
       n44 = me[15];
@@ -323,7 +326,7 @@ class Matrix4 {
     return this;
   }
 
-  applyToVector3Array (array: number[], offset?: number, length?: number) {
+  applyToVector3Array (array: number[], offset?: number, length?: number): number[] {
     const v1 = new Vector3();
 
     if (offset === undefined) {
@@ -333,7 +336,7 @@ class Matrix4 {
       length = array.length;
     }
 
-    for (var i = 0, j = offset; i < length; i += 3, j += 3) {
+    for (let i = 0, j = offset; i < length; i += 3, j += 3) {
       v1.x = array[j];
       v1.y = array[j + 1];
       v1.z = array[j + 2];
@@ -348,13 +351,13 @@ class Matrix4 {
     return array;
   }
 
-  makeTranslation (x: number, y: number, z: number) {
+  makeTranslation (x: number, y: number, z: number): this {
     this.set(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z, 0, 0, 0, 1);
 
     return this;
   }
 
-  multiplyScalar (s: number) {
+  multiplyScalar (s: number): this {
     const te = this.elements;
 
     te[0] *= s;
@@ -394,7 +397,7 @@ class Matrix4 {
     n42: number,
     n43: number,
     n44: number
-  ) {
+  ): this {
     const te = this.elements;
 
     te[0] = n11;
@@ -417,7 +420,7 @@ class Matrix4 {
     return this;
   }
 
-  makeScale (x: number, y: number, z: number) {
+  makeScale (x: number, y: number, z: number): this {
     this.set(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1);
 
     return this;

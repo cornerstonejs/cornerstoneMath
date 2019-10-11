@@ -1,8 +1,8 @@
 import lineSegment from './lineSegment';
-import { IRect, INumber2 } from './Interfaces';
+import { Rect, Number2 } from './Interfaces';
 import { Interval } from './interval';
 
-function rectToLineSegments (rect: IRect) {
+function rectToLineSegments (rect: Rect): { start: Number2; end: Number2 }[] {
   const top = {
     start: { x: rect.left, y: rect.top },
     end: { x: rect.left + rect.width, y: rect.top }
@@ -24,7 +24,7 @@ function rectToLineSegments (rect: IRect) {
   return lineSegments;
 }
 
-function distanceToPoint (rect: IRect, point: INumber2) {
+function distanceToPoint (rect: Rect, point: Number2): number {
   let minDistance = 655535;
   const lineSegments = rectToLineSegments(rect);
 
@@ -40,7 +40,7 @@ function distanceToPoint (rect: IRect, point: INumber2) {
 }
 
 // Returns top-left and bottom-right points of the rectangle
-function rectToPoints (rect: IRect) {
+function rectToPoints (rect: Rect): { topLeft: Number2; bottomRight: Number2 } {
   const rectPoints = {
     topLeft: {
       x: rect.left,
@@ -56,22 +56,22 @@ function rectToPoints (rect: IRect) {
 }
 
 // Returns whether two non-rotated rectangles are intersected
-function doesIntersect (rect1: IRect, rect2: IRect) {
+function doesIntersect (rect1: Rect, rect2: Rect): boolean {
   const intervalRect1H = new Interval(
     Math.min(rect1.left, rect1.left + rect1.width),
-    Math.max(rect1.left, rect1.left + rect1.width),
+    Math.max(rect1.left, rect1.left + rect1.width)
   );
   const intervalRect1V = new Interval(
     Math.min(rect1.top, rect1.top + rect1.height),
-    Math.max(rect1.top, rect1.top + rect1.height),
+    Math.max(rect1.top, rect1.top + rect1.height)
   );
   const intervalRect2H = new Interval(
     Math.min(rect2.left, rect2.left + rect2.width),
-    Math.max(rect2.left, rect2.left + rect2.width),
+    Math.max(rect2.left, rect2.left + rect2.width)
   );
   const intervalRect2V = new Interval(
     Math.min(rect2.top, rect2.top + rect2.height),
-    Math.max(rect2.top, rect2.top + rect2.height),
+    Math.max(rect2.top, rect2.top + rect2.height)
   );
 
   return intervalRect1H.doesIntersect(intervalRect2H) &&
@@ -79,22 +79,22 @@ function doesIntersect (rect1: IRect, rect2: IRect) {
 }
 
 // Returns intersection points of two non-rotated rectangles
-function getIntersectionRect (rect1: IRect, rect2: IRect) {
+function getIntersectionRect (rect1: Rect, rect2: Rect): { topLeft: Number2; bottomRight: Number2 } | undefined {
   const intervalRect1H = new Interval(
     Math.min(rect1.left, rect1.left + rect1.width),
-    Math.max(rect1.left, rect1.left + rect1.width),
+    Math.max(rect1.left, rect1.left + rect1.width)
   );
   const intervalRect1V = new Interval(
     Math.min(rect1.top, rect1.top + rect1.height),
-    Math.max(rect1.top, rect1.top + rect1.height),
+    Math.max(rect1.top, rect1.top + rect1.height)
   );
   const intervalRect2H = new Interval(
     Math.min(rect2.left, rect2.left + rect2.width),
-    Math.max(rect2.left, rect2.left + rect2.width),
+    Math.max(rect2.left, rect2.left + rect2.width)
   );
   const intervalRect2V = new Interval(
     Math.min(rect2.top, rect2.top + rect2.height),
-    Math.max(rect2.top, rect2.top + rect2.height),
+    Math.max(rect2.top, rect2.top + rect2.height)
   );
 
   const intersectionH = intervalRect1H.getIntersection(intervalRect2H);
@@ -113,7 +113,9 @@ function getIntersectionRect (rect1: IRect, rect2: IRect) {
 
 const rect = {
   distanceToPoint,
-  getIntersectionRect
+  getIntersectionRect,
+  rectToPoints,
+  doesIntersect
 };
 
 export default rect;

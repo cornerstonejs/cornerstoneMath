@@ -1,6 +1,6 @@
 import Vector3 from './vector3';
 import Line3 from './Line3';
-import { INumber3 } from './Interfaces';
+import { Number3 } from './Interfaces';
 
 // Copied from Three.JS
 /**
@@ -16,21 +16,21 @@ class Plane {
     this.constant = obj ? obj.constant : 0;
   }
 
-  set (normal: Vector3, constant: number) {
+  set (normal: Vector3, constant: number): this {
     this.normal.copy(normal);
     this.constant = constant;
 
     return this;
   }
 
-  setComponents (x: number, y: number, z: number, w: number) {
+  setComponents (x: number, y: number, z: number, w: number): this {
     this.normal.set(x, y, z);
     this.constant = w;
 
     return this;
   }
 
-  setFromNormalAndCoplanarPoint (normal: INumber3, point: INumber3) {
+  setFromNormalAndCoplanarPoint (normal: Number3, point: Number3): this {
     this.normal.copy(normal);
     // Must be this.normal, not normal, as this.normal is normalized
     this.constant = -this.normal.dot(point);
@@ -38,14 +38,14 @@ class Plane {
     return this;
   }
 
-  copy (plane: Plane) {
+  copy (plane: Plane): this {
     this.normal.copy(plane.normal);
     this.constant = plane.constant;
 
     return this;
   }
 
-  normalize () {
+  normalize (): this {
     // Note: will lead to a divide by zero if the plane is invalid.
 
     const inverseNormalLength = 1.0 / this.normal.length();
@@ -56,28 +56,28 @@ class Plane {
     return this;
   }
 
-  negate () {
+  negate (): this {
     this.constant *= -1;
     this.normal.negate();
 
     return this;
   }
 
-  distanceToPoint (point: INumber3) {
+  distanceToPoint (point: Number3): number {
     return this.normal.dot(point) + this.constant;
   }
 
-  distanceToSphere (sphere: { center: INumber3; radius: number }) {
+  distanceToSphere (sphere: { center: Number3; radius: number }): number {
     return this.distanceToPoint(sphere.center) - sphere.radius;
   }
 
-  projectPoint (point: INumber3, optionalTarget: Vector3 = new Vector3()) {
+  projectPoint (point: Number3, optionalTarget: Vector3 = new Vector3()): Vector3 {
     return this.orthoPoint(point, optionalTarget).
       sub(point).
       negate();
   }
 
-  orthoPoint (point: INumber3, optionalTarget: Vector3 = new Vector3()) {
+  orthoPoint (point: Number3, optionalTarget: Vector3 = new Vector3()): Vector3 {
     const perpendicularMagnitude = this.distanceToPoint(point);
 
 
@@ -86,7 +86,7 @@ class Plane {
       multiplyScalar(perpendicularMagnitude);
   }
 
-  isIntersectionLine (line: Line3) {
+  isIntersectionLine (line: Line3): boolean {
     // Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
 
     const startSign = this.distanceToPoint(line.start);
@@ -95,7 +95,7 @@ class Plane {
     return (startSign < 0 && endSign > 0) || (endSign < 0 && startSign > 0);
   }
 
-  intersectPlane (targetPlane: Plane) {
+  intersectPlane (targetPlane: Plane): { origin: Vector3; direction: Vector3 } {
     // Returns the intersection line between two planes
     const direction = this.normal.clone().cross(targetPlane.normal);
     const origin = new Vector3();
@@ -131,25 +131,25 @@ class Plane {
     return intersectionData;
   }
 
-  coplanarPoint (optionalTarget: Vector3 = new Vector3()) {
+  coplanarPoint (optionalTarget: Vector3 = new Vector3()): Vector3 {
     return optionalTarget.copy(this.normal).multiplyScalar(-this.constant);
   }
 
-  translate (offset: Vector3) {
+  translate (offset: Vector3): this {
     this.constant = this.constant - offset.dot(this.normal);
 
     return this;
   }
 
-  equals (plane: Plane) {
+  equals (plane: Plane): boolean {
     return plane.normal.equals(this.normal) && plane.constant === this.constant;
   }
 
-  clone () {
+  clone (): Plane {
     return new Plane().copy(this);
   }
 
-  setFromCoplanarPoints (a: INumber3, b: INumber3, c: INumber3) {
+  setFromCoplanarPoints (a: Number3, b: Number3, c: Number3): this {
     const v1 = new Vector3();
     const v2 = new Vector3();
     const normal = v1.
@@ -163,7 +163,7 @@ class Plane {
     return this;
   }
 
-  intersectLine (line: Line3, optionalTarget: Vector3 = new Vector3()) {
+  intersectLine (line: Line3, optionalTarget: Vector3 = new Vector3()): Vector3 | undefined {
     const v1 = new Vector3();
 
     const direction = line.delta(v1);

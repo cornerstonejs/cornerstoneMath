@@ -31,29 +31,21 @@ module.exports = {
   devtool: '#inline-source-map',
   // devtool: 'source-map',
   module: {
-    rules: [
-      // All files with a '.ts' extension will be handled by 'ts-loader'.
-      { 
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: /node_modules(?!\/webpack-dev-server)/
+    rules: [{
+      enforce: 'pre',
+      test: /\.ts$/,
+      exclude: /(node_modules)/,
+      loader: 'eslint-loader',
+      options: {
+        failOnError: false,
       }
-    ]
-    // rules: [{
-    //   enforce: 'pre',
-    //   test: /\.js$/,
-    //   exclude: /(node_modules)/,
-    //   loader: 'eslint-loader',
-    //   options: {
-    //     failOnError: false
-    //   }
-    // }, {
-    //   test: /\.js$/,
-    //   exclude: /(node_modules)/,
-    //   use: [{
-    //     loader: 'babel-loader'
-    //   }]
-    // }]
+    }, {
+      test: /\.ts$/,
+      exclude: /(node_modules)/,
+      use: [{
+        loader: 'babel-loader'
+      }]
+    }]
   },
   plugins: [
     bannerPlugin()

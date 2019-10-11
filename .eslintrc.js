@@ -1,7 +1,7 @@
 module.exports = {
-  parser: 'typescript-eslint-parser',
+  parser: '@typescript-eslint/parser',
   plugins: [
-      'typescript'
+      '@typescript-eslint'
   ],
   'env': {
     'browser': true,
@@ -10,9 +10,13 @@ module.exports = {
     'node': true,
     'mocha': true
   },
-  'extends': 'eslint:recommended',
+  'extends': [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
   'parserOptions': {
-    'sourceType': 'module'
+    'sourceType': 'module',
+    'project': './tsconfig.json'
   },
   'globals': {},
   'rules': {

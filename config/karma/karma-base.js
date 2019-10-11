@@ -21,21 +21,11 @@ webpackConfig.module.rules.push({
 module.exports = {
   basePath: '../../',
   frameworks: ['mocha', 'karma-typescript'],
-  // reporters: ['progress', 'coverage'],
-  // reporters: ['progress', 'mocha', 'karma-typescript'],
   reporters: ['karma-typescript', 'progress', 'coverage'],
   files: [
     'src/**/*.ts',
     'test/**/*_test.ts'
   ],
-
-  // plugins: [
-  //   'karma-webpack',
-  //   'karma-mocha',
-  //   'karma-chrome-launcher',
-  //   'karma-firefox-launcher',
-  //   'karma-coverage'
-  // ],
 
   // karma typescript configuration 
   karmaTypescriptConfig: {
@@ -56,17 +46,12 @@ module.exports = {
     },
     compilerOptions: {
         baseUrl: ".",
-        // paths: {
-        //     "*": [ "src/helper/*" ]
-        // }
     }
   },
 
   preprocessors: {
     'src/**/*.ts': ['karma-typescript'],
     'test/**/*_test.ts': ['karma-typescript']
-    // 'src/**/*.js': ['webpack'],
-    // 'test/**/*_test.js': ['webpack']
   },
 
   webpack: webpackConfig,
