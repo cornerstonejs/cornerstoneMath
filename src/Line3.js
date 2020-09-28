@@ -129,12 +129,12 @@ class Line3 {
     // Where A is a point of r1 and v a vector parallel to line.
     // And B is a point of r2 and u a vector parallel to line.
     // 'this' represents r2 and 'line' represents r1
-    var da = this.end.clone().sub(this.start); //u
-    var db = line.end.clone().sub(line.start); //v
-    var dc = line.start.clone().sub(this.start); // AB
+    const da = this.end.clone().sub(this.start); //u
+    const db = line.end.clone().sub(line.start); //v
+    const dc = line.start.clone().sub(this.start); // AB
 
-    var daCrossDb = da.clone().cross(db);
-    var dcCrossDb = dc.clone().cross(db);
+    const daCrossDb = da.clone().cross(db);
+    const dcCrossDb = dc.clone().cross(db);
 
     // Lines are not coplanar, stop here
     // Coplanar only if the vectors AB, u, v are linearly dependent, i.e AB . (u × v) = 0
