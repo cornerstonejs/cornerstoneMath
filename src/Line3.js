@@ -1,5 +1,5 @@
 import Vector3 from './vector3.js';
-import { clamp } from './math.js';
+import { clamp, approximatelyEquals } from './math.js';
 
 // Copied from THREE.JS
 /**
@@ -139,7 +139,7 @@ class Line3 {
     // Lines are not coplanar, stop here
     // Coplanar only if the vectors AB, u, v are linearly dependent, i.e AB . (u × v) = 0
     const coplanarResult = dc.dot(daCrossDb);
-    if (Number(coplanarResult.toFixed()) !== 0) { // to prevent js float precision issue use toFixed
+    if (!approximatelyEquals(coplanarResult, 0)) {
       return;
     }
 
