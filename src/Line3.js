@@ -1,5 +1,5 @@
 import Vector3 from './vector3.js';
-import { clamp } from './math.js';
+import { clamp, approximatelyEquals } from './math.js';
 
 // Copied from THREE.JS
 /**
@@ -125,15 +125,21 @@ class Line3 {
 
   intersectLine (line) {
     // http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment/10288710#10288710
-    const da = this.end.clone().sub(this.start);
-    const db = line.end.clone().sub(line.start);
-    const dc = line.start.clone().sub(this.start);
+    // Consider two lines r1 and r2, represented by the following parametric equations:A + vt and B + us, respectively.
+    // Where A is a point of r1 and v a vector parallel to line.
+    // And B is a point of r2 and u a vector parallel to line.
+    // 'this' represents r2 and 'line' represents r1
+    const da = this.end.clone().sub(this.start); //u
+    const db = line.end.clone().sub(line.start); //v
+    const dc = line.start.clone().sub(this.start); // AB
 
     const daCrossDb = da.clone().cross(db);
     const dcCrossDb = dc.clone().cross(db);
 
     // Lines are not coplanar, stop here
-    if (dc.dot(da) === 0) {
+    // Coplanar only if the vectors AB, u, v are linearly dependent, i.e AB . (u × v) = 0
+    const coplanarResult = dc.dot(daCrossDb);
+    if (!approximatelyEquals(coplanarResult, 0)) {
       return;
     }
 
