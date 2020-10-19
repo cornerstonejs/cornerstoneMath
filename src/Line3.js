@@ -139,7 +139,8 @@ class Line3 {
     // Lines are not coplanar, stop here
     // Coplanar only if the vectors AB, u, v are linearly dependent, i.e AB . (u × v) = 0
     const coplanarResult = dc.dot(daCrossDb);
-    if (!approximatelyEquals(coplanarResult, 0)) {
+    const normalizedCoplanarResult = coplanarResult / (dc.lengthSq() * daCrossDb.lengthSq());
+    if (!approximatelyEquals(normalizedCoplanarResult, 0)) {
       return;
     }
 
