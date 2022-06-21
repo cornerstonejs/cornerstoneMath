@@ -40,9 +40,9 @@ function approximatelyEquals (a, b, epsilon) {
 }
 
 export {
+  approximatelyEquals,
   clamp,
   degToRad,
-  approximatelyEquals,
   radToDeg,
   sign
 };

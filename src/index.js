@@ -1,6 +1,7 @@
 import { default as Line3 } from './Line3.js';
 import { default as lineSegment } from './lineSegment.js';
-import { clamp,
+import { approximatelyEquals,
+  clamp,
   degToRad,
   radToDeg,
   sign } from './math.js';
@@ -15,6 +16,7 @@ import { default as Vector3 } from './vector3.js';
 const cornerstoneMath = {
   Line3,
   lineSegment,
+  approximatelyEquals,
   clamp,
   degToRad,
   radToDeg,
@@ -30,6 +32,7 @@ const cornerstoneMath = {
 export {
   Line3,
   lineSegment,
+  approximatelyEquals,
   clamp,
   degToRad,
   radToDeg,
